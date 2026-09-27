@@ -4,11 +4,11 @@
     "slug": "EduGest",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/EduGestLogoApp.png",
     "scheme": "edugest",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "icon": "./assets/expo.icon"
+      "icon": "./assets/images/EduGestLogoApp.png"
     },
     "android": {
       "adaptiveIcon": {
@@ -21,7 +21,7 @@
     },
     "web": {
       "output": "static",
-      "favicon": "./assets/images/EduGestLogo.png"
+      "favicon": "./assets/images/EduGestLogoApp.png"
     },
     "plugins": [
       "expo-router",
