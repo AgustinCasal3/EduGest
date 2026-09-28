@@ -1,6 +1,8 @@
-import { View, Text, Image, TouchableOpacity, StyleSheet, } from "react-native";
+import Boton from "@/components/Boton";
+import BotonAtras from "@/components/BotonAtras";
 import { useRouter } from "expo-router";
-import  Boton  from "../components/Boton"
+import { Text } from "expo-router/build/react-navigation";
+import { Image, StyleSheet, View } from "react-native";
 import TextBox from "../components/Textbox";
 
 export default function PantallaPreinscripcion() {
@@ -8,18 +10,54 @@ export default function PantallaPreinscripcion() {
 
     return (
         <View style={styles.container}>
+
+            <BotonAtras
+                onPress={() => router.back()}
+            />
+
             <Image
                 source={require("../../assets/images/EduGestLogo.png")}
                 style={styles.logo}
-                resizeMode="contain"
             /> 
 
+                <Text style={styles.textoTitulo}>Formulario de Preinscripción</Text>
+
             <View style={styles.formContainer}>
+
+
+                <Text style={styles.textoLabel}>Institución:</Text>
                 <TextBox
-                    placeholder="we"
+                    placeholder="Institución"
                     value=""
                     keyboardType="default"
                 />
+
+                <Text style={styles.textoLabel}>Carrera:</Text>
+                <TextBox
+                    placeholder="Carrera"
+                    value=""
+                    keyboardType="default"
+                />
+
+                <Text style={styles.textoLabel}>Nombre completo:</Text>
+                <TextBox
+                    placeholder="Nombre completo"
+                    value=""
+                    keyboardType="default"
+                />
+
+                <Text style={styles.textoLabel}>Apellido:</Text>
+                <TextBox
+                    placeholder="Apellido"
+                    value=""
+                    keyboardType="default"
+                />
+
+                <Boton
+                    label = "Siguiente"
+                    onPress ={() => router.push("/preinscripcion")}
+                />
+
             </View>
             
         </View>
@@ -32,20 +70,29 @@ const styles = StyleSheet.create({
         backgroundColor: "#fafbff",
         alignItems: "center",
         justifyContent: "space-between",
-        paddingVertical: 80,
     },
     logo: {
-        width: 200,
-        height: 200,
-        marginTop: 10,
+        width: 150,
+        height: 100,
     },
     formContainer: {
-        width: "100%",
-        gap: 16,
-        alignItems: "center",
+        width: 220,
+        // gap: 16,
+        alignItems: "flex-start",
         justifyContent: "center",
         marginBottom: 80,
     },
+
+    textoTitulo: {
+        fontSize: 23,
+        marginBottom: 15,
+
+    },
+
+    textoLabel: {
+        fontSize: 15,
+    },
+
     button: {
         backgroundColor: "#5B6FC7",
         paddingVertical: 16,

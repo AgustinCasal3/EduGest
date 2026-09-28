@@ -1,3 +1,3 @@
-import PantallaPreinscripcion from "@/screens/PantallaPreinscripcion";
+import PantallaPreinscripcion from "@/screens/pantallaPreinscripcion";
 
 export default PantallaPreinscripcion;

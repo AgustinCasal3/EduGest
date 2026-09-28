@@ -1,6 +1,6 @@
-import { View, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
-import  Boton  from "../components/Boton"
+import { Image, StyleSheet, View } from "react-native";
+import Boton from "../components/Boton";
 
 export default function PantallaInicio() {
     const router = useRouter();
@@ -10,7 +10,7 @@ export default function PantallaInicio() {
             <Image
                 source={require("../../assets/images/EduGestLogo.png")}
                 style={styles.logo}
-                resizeMode="contain"
+                // resizeMode="contain"
             /> 
 
             <View style={styles.buttonsContainer}>
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
         paddingVertical: 80,
     },
     logo: {
-        width: 200,
+        width: 250,
         height: 200,
         marginTop: 10,
     },
