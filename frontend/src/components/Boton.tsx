@@ -1,13 +1,14 @@
-import { TouchableOpacity, Text, StyleSheet } from "react-native";
+import { StyleProp, StyleSheet, Text, TouchableOpacity, ViewStyle } from "react-native";
 
 interface BotonProps{
     label: string;
     onPress: () => void;
+    style?: StyleProp<ViewStyle>;
 }
 
-export default function Boton({label, onPress}: BotonProps){
+export default function Boton({label, onPress, style}: BotonProps){
     return(
-        <TouchableOpacity style={styles.boton} onPress={onPress}>
+        <TouchableOpacity style={[styles.boton, style]} onPress={onPress}>
             <Text style={styles.textoBoton}>{label}</Text>
         </TouchableOpacity>
     );

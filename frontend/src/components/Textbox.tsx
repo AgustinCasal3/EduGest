@@ -3,7 +3,7 @@ import { KeyboardTypeOptions, StyleSheet, TextInput } from "react-native";
 interface TextBoxProp{
     placeholder: string;
     placeholderTextColor?: string;
-    value: string;
+    value?: string;
     onChangeText?: (Text: string) => void;
     secureTextEntry?: boolean;
     keyboardType?: KeyboardTypeOptions;
@@ -39,6 +39,6 @@ const styles = StyleSheet.create({
         paddingVertical: 14,
         fontSize: 16,
         width: 220,
-        marginBottom: 15,
+        // marginBottom: 15,
     },
 });

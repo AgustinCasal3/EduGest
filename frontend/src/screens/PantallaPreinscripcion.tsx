@@ -20,7 +20,7 @@ export default function PantallaPreinscripcion() {
                 style={styles.logo}
             /> 
 
-                <Text style={styles.textoTitulo}>Formulario de Preinscripción</Text>
+            <Text style={styles.textoTitulo}>Formulario de Preinscripción</Text>
 
             <View style={styles.formContainer}>
 
@@ -28,34 +28,31 @@ export default function PantallaPreinscripcion() {
                 <Text style={styles.textoLabel}>Institución:</Text>
                 <TextBox
                     placeholder="Institución"
-                    value=""
                     keyboardType="default"
                 />
 
                 <Text style={styles.textoLabel}>Carrera:</Text>
                 <TextBox
                     placeholder="Carrera"
-                    value=""
                     keyboardType="default"
                 />
 
                 <Text style={styles.textoLabel}>Nombre completo:</Text>
                 <TextBox
                     placeholder="Nombre completo"
-                    value=""
                     keyboardType="default"
                 />
 
                 <Text style={styles.textoLabel}>Apellido:</Text>
                 <TextBox
                     placeholder="Apellido"
-                    value=""
                     keyboardType="default"
                 />
 
                 <Boton
                     label = "Siguiente"
                     onPress ={() => router.push("/preinscripcion")}
+                    style = {styles.botonMargin}
                 />
 
             </View>
@@ -69,28 +66,30 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#fafbff",
         alignItems: "center",
-        justifyContent: "space-between",
+        
     },
     logo: {
         width: 150,
         height: 100,
+        marginTop: 60,
     },
     formContainer: {
         width: 220,
         // gap: 16,
         alignItems: "flex-start",
         justifyContent: "center",
-        marginBottom: 80,
+        // marginBottom: 80,
     },
 
     textoTitulo: {
         fontSize: 23,
-        marginBottom: 15,
+        // marginBottom: 15,
 
     },
 
     textoLabel: {
         fontSize: 15,
+        marginTop: 10,
     },
 
     button: {
@@ -104,5 +103,8 @@ const styles = StyleSheet.create({
         color: "white",
         fontSize: 16,
         fontWeight: "600",
+    },
+    botonMargin: {
+        marginTop: 20,
     },
 });

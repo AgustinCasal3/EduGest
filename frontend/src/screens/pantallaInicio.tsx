@@ -33,13 +33,13 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#9DB4F5",
         alignItems: "center",
-        justifyContent: "space-between",
         paddingVertical: 80,
     },
     logo: {
         width: 250,
         height: 200,
         marginTop: 10,
+        marginBottom: 50,
     },
     buttonsContainer: {
         width: "100%",
