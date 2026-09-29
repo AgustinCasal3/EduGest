@@ -1,14 +1,16 @@
 import Boton from "@/components/Boton";
 import BotonAtras from "@/components/BotonAtras";
-import { Picker } from "@react-native-picker/picker";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import { useRouter } from "expo-router";
 import { Text } from "expo-router/build/react-navigation";
+import { useState } from "react";
 import { Image, StyleSheet, View } from "react-native";
 
 import TextBox from "../components/Textbox";
 
-export default function PantallaPreinscripcion() {
+export default function PantallaPreinscripcion2() {
     const router = useRouter();
+    const [fecha, setFecha] = useState(new Date());
 
     return (
         <View style={styles.container}>
@@ -27,33 +29,32 @@ export default function PantallaPreinscripcion() {
             <View style={styles.formContainer}>
 
 
-                <Text style={styles.textoLabel}>Institución:</Text>
-                <Picker style={styles.textBox}>
-                    <Picker.Item label="Selecciona una opcion"/>
-                    <Picker.Item label="ISFT 220"/>
-                    <Picker.Item label="ISFT 1"/>
-                </Picker>
+                <Text style={styles.textoLabel}>Fecha de nacimiento</Text>
+                <DateTimePicker
+                value={fecha}
+                mode="date"
+                />
 
-                <Text style={styles.textoLabel}>Carrera:</Text>
+                <Text style={styles.textoLabel}>Direccion</Text>
                 <TextBox
-                    placeholder="Carrera"
+                    placeholder="Direccion"
                     keyboardType="default"
                 />
 
-                <Text style={styles.textoLabel}>Nombre completo:</Text>
+                <Text style={styles.textoLabel}>Telefono</Text>
                 <TextBox
-                    placeholder="Nombre completo"
+                    placeholder="Telefono"
                     keyboardType="default"
                 />
 
-                <Text style={styles.textoLabel}>Apellido:</Text>
+                <Text style={styles.textoLabel}>Email</Text>
                 <TextBox
-                    placeholder="Apellido"
+                    placeholder="Email"
                     keyboardType="default"
                 />
 
                 <Boton
-                    label = "Siguiente"
+                    label = "Pre-inscribirse"
                     onPress ={() => router.push("/preinscripcion2")}
                     style = {styles.botonMargin}
                 />
