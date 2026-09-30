@@ -4,13 +4,14 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { useRouter } from "expo-router";
 import { Text } from "expo-router/build/react-navigation";
 import { useState } from "react";
-import { Image, StyleSheet, View } from "react-native";
+import { Image, Platform, StyleSheet, TouchableOpacity, View } from "react-native";
 
 import TextBox from "../components/Textbox";
 
 export default function PantallaPreinscripcion2() {
     const router = useRouter();
     const [fecha, setFecha] = useState(new Date());
+    const [mostrarPicker, setMostrarPicker] = useState(false);
 
     return (
         <View style={styles.container}>
@@ -28,12 +29,31 @@ export default function PantallaPreinscripcion2() {
 
             <View style={styles.formContainer}>
 
-
                 <Text style={styles.textoLabel}>Fecha de nacimiento</Text>
-                <DateTimePicker
-                value={fecha}
-                mode="date"
-                />
+                {Platform.OS === "web" ? (
+                    <input style={styles.textBoxDate} type="date" placeholder="Fecha de nacimiento"></input>
+                ) : (
+                    <>
+                        <TouchableOpacity style={styles.textBox} onPress={() => setMostrarPicker(true)}>
+                            <Text>Fecha de nacimiento</Text>
+                        </TouchableOpacity>
+        
+                        {mostrarPicker && (
+                            <DateTimePicker
+                            style={styles.textBox}
+                            value={fecha}
+                            mode="date"
+                            display={Platform.OS === "ios" ? "spinner" : "default"}
+                            onChange={(event, selectedDate) => {
+                                setMostrarPicker(Platform.OS === "ios");
+                                if(selectedDate){
+                                    setFecha(selectedDate);
+                                }
+                            }}
+                            />
+                        )} 
+                    </>
+                )}
 
                 <Text style={styles.textoLabel}>Direccion</Text>
                 <TextBox
@@ -55,7 +75,7 @@ export default function PantallaPreinscripcion2() {
 
                 <Boton
                     label = "Pre-inscribirse"
-                    onPress ={() => router.push("/preinscripcion2")}
+                    onPress ={() => router.push("/preinscripcionexitosa")}
                     style = {styles.botonMargin}
                 />
 
@@ -120,6 +140,18 @@ const styles = StyleSheet.create({
         paddingVertical: 14,
         fontSize: 16,
         width: 220,
+        // marginBottom: 15,
+    },
+    textBoxDate: {
+        backgroundColor: "#d9d9d9",
+        borderWidth: 2,
+        borderColor: "black",
+        borderRadius: 20,
+        paddingHorizontal: 16,
+        paddingVertical: 14,
+        fontSize: 16,
+        width: 215,
+        height: 50,
         // marginBottom: 15,
     },
 });

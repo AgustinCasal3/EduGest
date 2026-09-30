@@ -21,7 +21,7 @@ export default function PantallaInicio() {
 
                 <Boton
                 label = "Iniciar sesión"
-                onPress ={() => router.push("/")}
+                onPress ={() => router.push("/iniciarsesion")}
                 />
             </View>
         </View>
