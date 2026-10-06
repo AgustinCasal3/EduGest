@@ -38,7 +38,7 @@ return (
                 />
                 <Boton
                     label = "Iniciar sesion"
-                    onPress ={() => router.push("/")}
+                    onPress ={() => router.push("/home")}
                     style = {styles.botonMargin}
                 />
 
