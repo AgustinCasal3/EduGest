@@ -1,29 +1,40 @@
-const express = require("express");
-const pool = require('./db'); // Esta es la conexion a la base de datos de PostGre (Cambiar lo que haya que cambiar)
+require('dotenv').config();
 
-const homeRoutes = require('./routes/homeRoutes'); // PANTALLA HOME
-const foroRoutes = require('./routes/foroRoutes'); // PANTALLA FORO
+const express = require("express");
+const cors = require("cors");
+const os = require("os");
+const authRoutes = require('./routes/authRoutes');
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
-// Ruta principal para la prueba del funcionamiento
+app.use('/api/auth', authRoutes);
+
 app.get('/', (req, res) => {
-    res.json({
-        message: 'API de gestion educativa funcionando'
-    });
+    res.json({ message: 'API de gestion educativa funcionando' });
 });
 
-// PANTALLA HOME
-app.use('/api/home', homeRoutes);
+const PORT = process.env.PORT || 3000;
 
-// PANTALLA FORO
-app.use('/api/foro', foroRoutes);
+// 3. Función para obtener tu IP local real
+const obtenerIpLocal = () => {
+    const interfaces = os.networkInterfaces();
+    for (const nombreInterfaz in interfaces) {
+        for (const iface of interfaces[nombreInterfaz]) {
 
+            if (iface.family === 'IPv4' && !iface.internal) {
+                return iface.address;
+            }
+        }
+    }
+    return 'localhost';
+};
 
-const PORT = 3000;
-
-app.listen(PORT, () => {
-    console.log(`Servidor ejecutandose en http://localhost:${PORT}`);
-})
+app.listen(PORT, '0.0.0.0', () => {
+    const ip = obtenerIpLocal();
+    console.log(`Servidor ejecutándose correctamente:`);
+    console.log(`Local: http://localhost:${PORT}`);
+    console.log(`En red: http://${ip}:${PORT}`);
+});
