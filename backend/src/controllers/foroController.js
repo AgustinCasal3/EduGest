@@ -22,7 +22,7 @@ const getInfoForo = async (req, res) => {
   }
 };
 
-// PETICIÓN 1.2: Información del Usuario (Validar acceso)
+// PETICIÓN 2: Información del Usuario (Validar acceso)
 const getInfoUsuario = async (req, res) => {
   const { id } = req.params;
   try {
@@ -38,7 +38,7 @@ const getInfoUsuario = async (req, res) => {
   }
 };
 
-// PETICIÓN 2: Recuperar UsuarioInstitucion (Vincular usuario con la institución)
+// PETICIÓN 3: Recuperar UsuarioInstitucion (Vincular usuario con la institución)
 const getUsuarioInstitucion = async (req, res) => {
   const { userId, institucionId } = req.params;
   try {
@@ -58,7 +58,7 @@ const getUsuarioInstitucion = async (req, res) => {
   }
 };
 
-// PETICIÓN 3: Info Instituciones
+// PETICIÓN 4: Info Instituciones
 const getInfoInstitucion = async (req, res) => {
   const { id } = req.params;
   try {
@@ -74,7 +74,7 @@ const getInfoInstitucion = async (req, res) => {
   }
 };
 
-// PETICIÓN 4: Info Carreras
+// PETICIÓN 5: Info Carreras
 const getInfoCarrera = async (req, res) => {
   const { id } = req.params;
   try {
@@ -90,7 +90,7 @@ const getInfoCarrera = async (req, res) => {
   }
 };
 
-// PETICIÓN 5: Info Materias (Listar las materias por carrera para el foro)
+// PETICIÓN 6: Info Materias (Listar las materias por carrera para el foro)
 const getMateriasByCarrera = async (req, res) => {
   const { carreraId } = req.params;
   try {
