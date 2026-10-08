@@ -3,11 +3,54 @@ import BotonAtras from "@/components/BotonAtras";
 import { useRouter } from "expo-router";
 import { Text } from "expo-router/build/react-navigation";
 import { Image, StyleSheet, View } from "react-native";
-
+import { useState } from "react";
 import TextBox from "../components/Textbox";
+import React from "react";
+import login from "../../../backend/src/controllers/authController"
 
 export default function PantallaIniciodesesion() {
     const router = useRouter();
+
+    const [datosUsuario ,setDatosUsuario] = useState({
+        email: "",
+        contraseña: ""
+    });
+
+    const cambiarTextbox = (campo: string, valor: string) => {
+        setDatosUsuario((anterior) => ({...anterior, [campo]: valor}));
+    }
+
+    const [cargando, setCargando] = useState(false);
+    const [error, setError] = useState("");
+
+    const validar = () => {
+        if(!datosUsuario.email.trim() || !datosUsuario.contraseña.trim()){
+            return "Complete los campos";
+        }
+        if(datosUsuario.email.includes("@")) return "El email no es valido";
+    }
+
+    const enviarDatos = async () => {
+        const mensaje = validar();
+        if(mensaje){
+            setError(mensaje);
+            return;
+        }
+
+        setError("");
+        setCargando(true);
+
+        try{
+            
+            router.push("/");
+        }catch (e){
+            setError("No se pudo iniciar sesión. Intentelo de nuevo.");
+        }finally{
+            setCargando(false);
+        }
+
+
+    }
 
 return (
         <View style={styles.container}>
@@ -29,16 +72,20 @@ return (
                 <TextBox
                     placeholder="Email"
                     keyboardType="default"
+                    value={datosUsuario.email}
+                    onChangeText={(texto) => cambiarTextbox("email", texto)}
                 />
 
                 <Text style={styles.textoLabel}>Nombre completo:</Text>
                 <TextBox
                     placeholder="Contraseña"
                     keyboardType="default"
+                    value={datosUsuario.contraseña}
+                    onChangeText={(texto) => cambiarTextbox("contraseña", texto)}
                 />
                 <Boton
                     label = "Iniciar sesion"
-                    onPress ={() => router.push("/home")}
+                    onPress ={enviarDatos}
                     style = {styles.botonMargin}
                 />
 
