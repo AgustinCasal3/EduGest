@@ -5,7 +5,6 @@ import { Text } from "expo-router/build/react-navigation";
 import { Image, StyleSheet, View } from "react-native";
 import { useState } from "react";
 import TextBox from "../components/Textbox";
-import React from "react";
 import { servicioLogin } from "@/services/ServicioLogin";
 
 export default function PantallaIniciodesesion() {
@@ -27,15 +26,23 @@ export default function PantallaIniciodesesion() {
         if(!datosUsuario.email.trim() || !datosUsuario.contraseña.trim()){
             return "Complete los campos";
         }
-        if(datosUsuario.email.includes("@")) return "El email no es valido";
-    }
 
+        //Esta validacion esta rara, hay que verla
+        // if(datosUsuario.email.includes("@")){
+        //     console.log("entre");
+        //     return "El email no es valido";
+        // } 
+            
+    }
+    
     const enviarDatos = async () => {
+        
         const mensaje = validar();
         if(mensaje){
             setError(mensaje);
             return;
         }
+        
 
         setError("");
         setCargando(true);
