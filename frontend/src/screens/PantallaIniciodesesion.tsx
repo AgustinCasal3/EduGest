@@ -6,7 +6,7 @@ import { Image, StyleSheet, View } from "react-native";
 import { useState } from "react";
 import TextBox from "../components/Textbox";
 import React from "react";
-import login from "../../../backend/src/controllers/authController"
+import { servicioLogin } from "@/services/ServicioLogin";
 
 export default function PantallaIniciodesesion() {
     const router = useRouter();
@@ -41,7 +41,8 @@ export default function PantallaIniciodesesion() {
         setCargando(true);
 
         try{
-            
+            const respuesta = await servicioLogin(datosUsuario.email, datosUsuario.contraseña);
+            console.log(respuesta.token);
             router.push("/");
         }catch (e){
             setError("No se pudo iniciar sesión. Intentelo de nuevo.");
@@ -85,7 +86,7 @@ return (
                 />
                 <Boton
                     label = "Iniciar sesion"
-                    onPress ={enviarDatos}
+                    onPress = {enviarDatos}
                     style = {styles.botonMargin}
                 />
 

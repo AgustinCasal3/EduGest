@@ -1,3 +1,3 @@
-import PantallaInicio from "@/screens/PantallaInicio";
+import PantallaInicio from "@/screens/pantallaInicio";
 
 export default PantallaInicio;
