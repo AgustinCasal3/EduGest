@@ -3,7 +3,9 @@ require('dotenv').config();
 const express = require("express");
 const cors = require("cors");
 const os = require("os");
+
 const authRoutes = require('./routes/authRoutes');
+const homeRoutes = require('./routes/homeRoutes');
 
 const app = express();
 
@@ -11,6 +13,8 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);
+
+app.use('/api/home', homeRoutes);
 
 app.get('/', (req, res) => {
     res.json({ message: 'API de gestion educativa funcionando' });
