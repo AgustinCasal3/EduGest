@@ -6,6 +6,7 @@ const os = require("os");
 
 const authRoutes = require('./routes/authRoutes');
 const homeRoutes = require('./routes/homeRoutes');
+const foroRoutes = require('./routes/foroRoutes');
 
 const app = express();
 
@@ -15,6 +16,8 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 
 app.use('/api/home', homeRoutes);
+
+app.use('/api/foros', foroRoutes);
 
 app.get('/', (req, res) => {
     res.json({ message: 'API de gestion educativa funcionando' });
