@@ -7,6 +7,9 @@ interface TextBoxProp{
     onChangeText?: (Text: string) => void;
     secureTextEntry?: boolean;
     keyboardType?: KeyboardTypeOptions;
+    autoCapitalize?: string;
+    autoCorrect?: boolean;
+    error?: boolean;
 }
 
 export default function TextBox ({

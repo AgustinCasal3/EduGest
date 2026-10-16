@@ -1,6 +1,6 @@
 import axios from "axios";
 
-interface loginProp{
+interface login{
     mensaje: string,
     token: string,
     usuario: {id: number;
@@ -11,11 +11,10 @@ interface loginProp{
         };
 }
 
-export async function servicioLogin (email: string, password: string): Promise<loginProp> {
+export async function servicioLogin (email: string, password: string): Promise<login> {
     try{
-        console.log("Entro a la funcion servicio login");
-        //Faltaba el perto, tremendo boludo T_T
-        const respuesta = await axios.post<loginProp>(
+        
+        const respuesta = await axios.post<login>(
             "http://192.168.0.79:3000/api/auth/login",
             {email, password},
             {timeout: 10000}

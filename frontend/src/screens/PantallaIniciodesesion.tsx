@@ -1,11 +1,11 @@
 import Boton from "@/components/Boton";
 import BotonAtras from "@/components/BotonAtras";
 import { useRouter } from "expo-router";
-import { Text } from "expo-router/build/react-navigation";
-import { Image, StyleSheet, View } from "react-native";
+import { Image, StyleSheet, View, Text } from "react-native";
 import { useState } from "react";
 import TextBox from "../components/Textbox";
 import { servicioLogin } from "@/services/ServicioLogin";
+import { guardarToken } from "@/services/ServicioToken";
 
 export default function PantallaIniciodesesion() {
     const router = useRouter();
@@ -15,44 +15,52 @@ export default function PantallaIniciodesesion() {
         contraseña: ""
     });
 
+    const [cargando, setCargando] = useState(false);
+
+    type Errores = {email?: string; contraseña?: string; general?: string };
+    const [errores, setErrores] = useState<Errores>({});
+    
     const cambiarTextbox = (campo: string, valor: string) => {
         setDatosUsuario((anterior) => ({...anterior, [campo]: valor}));
+        setErrores((anterior) => ({ ...anterior, [campo]: undefined, general: undefined}))
     }
 
-    const [cargando, setCargando] = useState(false);
-    const [error, setError] = useState("");
+    const validar = (): Errores => {
+        const nuevos: Errores = {};
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    const validar = () => {
-        if(!datosUsuario.email.trim() || !datosUsuario.contraseña.trim()){
-            return "Complete los campos";
+        if(!datosUsuario.email.trim()){
+            nuevos.email = "Ingrese su email";
+        } else if(!emailRegex.test(datosUsuario.email.trim())){
+            nuevos.email = "El email no es valido";
+        }
+        
+        if(!datosUsuario.contraseña.trim()){
+            nuevos.contraseña = "Ingrese su contraseña";
         }
 
-        //Esta validacion esta rara, hay que verla
-        // if(datosUsuario.email.includes("@")){
-        //     console.log("entre");
-        //     return "El email no es valido";
-        // } 
+        return nuevos;
             
     }
     
     const enviarDatos = async () => {
         
-        const mensaje = validar();
-        if(mensaje){
-            setError(mensaje);
-            return;
-        }
+        const nuevos = validar();
+        setErrores(nuevos);
+        if(Object.keys(nuevos).length > 0) return;
         
-
-        setError("");
         setCargando(true);
-
         try{
             const respuesta = await servicioLogin(datosUsuario.email, datosUsuario.contraseña);
-            console.log(respuesta.token);
-            router.push("/");
+            console.log( "Token: " + respuesta.token);
+            await guardarToken(respuesta.token);
+            router.replace("/home");
         }catch (e){
-            setError("No se pudo iniciar sesión. Intentelo de nuevo.");
+            setErrores({
+                email: "",
+                contraseña: "",
+                general: (e as Error).message,
+            })
         }finally{
             setCargando(false);
         }
@@ -76,21 +84,31 @@ return (
 
             <View style={styles.formContainer}>
 
-                <Text style={styles.textoLabel}>Email Institucional</Text>
+                <Text style={styles.textoLabel}>Email Institucional:</Text>
                 <TextBox
                     placeholder="Email"
-                    keyboardType="default"
+                    keyboardType="email-address"
+                    autoCapitalize="none"
+                    autoCorrect= {false}
                     value={datosUsuario.email}
                     onChangeText={(texto) => cambiarTextbox("email", texto)}
+                    error={!!errores.email}
                 />
+                {!!errores.email?.trim() && <Text style={styles.textoError}></Text>}
 
-                <Text style={styles.textoLabel}>Nombre completo:</Text>
+                <Text style={styles.textoLabel}>Contraseña:</Text>
                 <TextBox
                     placeholder="Contraseña"
-                    keyboardType="default"
+                    secureTextEntry
+                    autoCapitalize="none"
                     value={datosUsuario.contraseña}
                     onChangeText={(texto) => cambiarTextbox("contraseña", texto)}
+                    error={!!errores.contraseña}
                 />
+                {!!errores.contraseña?.trim() && <Text style={styles.textoError}>{errores.contraseña}</Text>}
+
+                {!!errores.general && <Text style={styles.textoError}>{errores.general}</Text>}
+
                 <Boton
                     label = "Iniciar sesion"
                     onPress = {enviarDatos}
@@ -132,6 +150,12 @@ const styles = StyleSheet.create({
     textoLabel: {
         fontSize: 15,
         marginTop: 10,
+    },
+
+    textoError: {
+        color: "#d32f2f",
+        fontSize: 13,
+        marginTop: 4,
     },
 
     button: {
