@@ -8,7 +8,7 @@ export default function BotonAtras({onPress}: BotonProps){
     return(
         <TouchableOpacity style={styles.botonAtras} onPress={onPress}>
             <Image 
-                source={require("../../assets/images/BotonAtras.svg")}
+                source={require("../../assets/images/BotonAtras.png")}
                 resizeMode="contain"
             />
         </TouchableOpacity>
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
         width: 30,
         height: 20,
         position: "absolute",
-        top: 10,
+        top: 30,
         left: 10,
     },
 })

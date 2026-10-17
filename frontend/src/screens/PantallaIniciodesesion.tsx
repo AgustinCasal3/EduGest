@@ -31,8 +31,8 @@ export default function PantallaIniciodesesion() {
 
         if(!datosUsuario.email.trim()){
             nuevos.email = "Ingrese su email";
-        } else if(!emailRegex.test(datosUsuario.email.trim())){
-            nuevos.email = "El email no es valido";
+        } else if(!emailRegex.test(datosUsuario.email.trim())){// Valida si el email es valido
+            // nuevos.email = "El email no es valido";
         }
         
         if(!datosUsuario.contraseña.trim()){
@@ -57,8 +57,8 @@ export default function PantallaIniciodesesion() {
             router.replace("/home");
         }catch (e){
             setErrores({
-                email: "",
-                contraseña: "",
+                email: " ",
+                contraseña: " ",
                 general: (e as Error).message,
             })
         }finally{
@@ -92,9 +92,9 @@ return (
                     autoCorrect= {false}
                     value={datosUsuario.email}
                     onChangeText={(texto) => cambiarTextbox("email", texto)}
-                    error={!!errores.email}
+                    error={errores.email !== undefined}
                 />
-                {!!errores.email?.trim() && <Text style={styles.textoError}></Text>}
+                {!!errores.email?.trim() && <Text style={styles.textoError}>{errores.email}</Text>}
 
                 <Text style={styles.textoLabel}>Contraseña:</Text>
                 <TextBox
@@ -103,7 +103,7 @@ return (
                     autoCapitalize="none"
                     value={datosUsuario.contraseña}
                     onChangeText={(texto) => cambiarTextbox("contraseña", texto)}
-                    error={!!errores.contraseña}
+                    error={errores.contraseña !== undefined}
                 />
                 {!!errores.contraseña?.trim() && <Text style={styles.textoError}>{errores.contraseña}</Text>}
 

@@ -26,7 +26,7 @@ export default function PantallaHome() {
 
   if (cargando) {
     return (
-      <View style={style.centrado}>
+      <View style={styles.centrado}>
         <ActivityIndicator size="large" />
       </View>
     );
@@ -34,23 +34,24 @@ export default function PantallaHome() {
 
   if (error) {
     return (
-      <View style={style.centrado}>
+      <View style={styles.centrado}>
         <Text>{error}</Text>
       </View>
     );
   }
 
   return (
+
     <FlatList
       style={styles.container}
-      contentContainerStyle={style.contenido}
+      contentContainerStyle={styles.contenido}
       data={instituciones}
-      keyExtractor={(item) => String(item.id)}
+      keyExtractor={(item) => String(item.institucion_id)}
       ListEmptyComponent={<Text>No estás inscripto en ninguna institución</Text>}
       renderItem={({ item }) => (
         <TarjetasInstituciones
-          nombreInstitucion={item.nombre}
-          carreraInstitucion={`${item.carrera} - ${item.anio}`}
+          nombreInstitucion={item.institucion_nombre}
+          carreraInstitucion={`${item.carrera_nombre} - ${item.anio_lectivo}`}
           direccioninstitucion={item.direccion}
           onPress={() =>
             router.push("/"
@@ -58,7 +59,7 @@ export default function PantallaHome() {
             //   pathname: "/institucion/[id]",
             //   params: { id: String(item.id) },
             // }
-        )
+          )
           }
         />
       )}
@@ -66,15 +67,17 @@ export default function PantallaHome() {
   );
 }
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fafbff",
+    // alignItems: "center",  
   },
   contenido: {
-    alignItems: "center",
-    gap: 16,
+    // alignItems: "center",   // acá sí va, en contentContainerStyle
+    paddingHorizontal: 16,  // el margen lateral lo da el padding, no un porcentaje
     paddingVertical: 16,
+    gap: 16,
   },
   centrado: {
     flex: 1,
@@ -82,41 +85,4 @@ const style = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#fafbff",
   },
-});
-
-// export default function PantallaHome() {
-
-//     const router = useRouter();
-
-
-
-//     return(
-//         <View style={styles.container}>
-
-//             <TarjetasInstituciones
-//                 nombreInstitucion="ISFT220"
-//                 carreraInstitucion="Desarrollo de software - 2026"
-//                 direccioninstitucion="Virrey loreto 2564"
-//                 onPress ={() => router.push("/")}
-//             />
-
-//             <TarjetasInstituciones
-//                 nombreInstitucion="Centro atomico"
-//                 carreraInstitucion="Ingenieria de materiales - 2025"
-//                 direccioninstitucion="AV. Gral Paz 1499"
-//                 onPress={() => router.push("/preinscripcionexitosa")}
-            
-//             />
-
-//         </View>
-//     );
-// }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "#fafbff",
-        alignItems: "center",  
-    },
-   
 });

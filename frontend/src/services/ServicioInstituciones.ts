@@ -3,14 +3,14 @@ import axios from "axios";
 import { obtenerToken } from "./ServicioToken";
 import { borrarToken } from "./ServicioToken";
 
-const API_URL = "http://192.168.0.79:3000/api";
+const API_URL = "http://192.168.100.8:3000/api";
 
 export interface Institucion {
-    id: number;
-    nombre: string;
+    institucion_id: number;
+    institucion_nombre: string;
     direccion: string;
-    carrera: string;
-    anio: number;
+    carrera_nombre: string;
+    anio_lectivo: number;
 }
 
 export async function obtenerMisInstituciones(): Promise<Institucion[]> {
@@ -18,7 +18,7 @@ export async function obtenerMisInstituciones(): Promise<Institucion[]> {
         const token = await obtenerToken();
 
         const respuesta = await axios.get<Institucion[]>(
-            `${API_URL}/instituciones/mis-instituciones`,
+            `${API_URL}/home/mis-instituciones`,
             {
                 headers: { Authorization: `Bearer ${token}` },
                 timeout: 10000,

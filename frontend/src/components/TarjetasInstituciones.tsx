@@ -1,4 +1,4 @@
-import { Image, StyleSheet, TouchableOpacity, View, Text } from "react-native";
+import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
 
 interface TarjetasProps{
     nombreInstitucion: string,
@@ -36,9 +36,13 @@ export default function TarjetasInstituciones({nombreInstitucion, carreraInstitu
 
 const styles = StyleSheet.create({
     instituciones: {
-        height: "30%",
-        width: "25%",
-        marginTop: 30,
+        width: "100%",
+        maxWidth: 400,
+        alignSelf: "center",
+        minHeight: 180,
+        justifyContent: "space-between",
+        padding: 16,
+        // marginTop: 30,
 
         backgroundColor: "lightgray",
 
@@ -47,27 +51,27 @@ const styles = StyleSheet.create({
 
     institucionTitulo: {
         fontSize: 23,
-        padding: "2%",
+        // padding: "2%",
     },
 
     institucionesDivision: {
-        height: "50%",
+        // height: "50%",
         justifyContent: "flex-end",
     },
 
     textoSubtitulo: {
-        padding: "2%",
+        // padding: "2%",
     },
 
     filaDireccion: {
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        paddingBottom: "2.5%",
+        // paddingBottom: "2.5%",
     },
 
     flechaDerecha: {
-        paddingRight: "8%",
+        
     },
 
     botonMenu: {
@@ -75,7 +79,7 @@ const styles = StyleSheet.create({
         width: "6%",
 
         top: "10%",
-        right: "5%",
+        right: 0,
         zIndex: 1, // para que quede por encima de los textos
         
         display: "flex",

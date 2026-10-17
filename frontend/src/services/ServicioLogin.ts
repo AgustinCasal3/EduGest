@@ -1,5 +1,7 @@
 import axios from "axios";
 
+const API_URL = "http://192.168.100.8:3000/api";
+
 interface login{
     mensaje: string,
     token: string,
@@ -15,7 +17,7 @@ export async function servicioLogin (email: string, password: string): Promise<l
     try{
         
         const respuesta = await axios.post<login>(
-            "http://192.168.0.79:3000/api/auth/login",
+            `${API_URL}/auth/login`,
             {email, password},
             {timeout: 10000}
         );
