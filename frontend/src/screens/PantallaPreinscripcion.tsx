@@ -30,7 +30,7 @@ export default function PantallaPreinscripcion() {
                 <Text style={styles.textoLabel}>Institución:</Text>
                 <View style={styles.contenedorTextBoxPicker}>
                     <Picker style={styles.textBoxPicker}>
-                        <Picker.Item label="Selecciona una opcion"/>
+                        <Picker.Item label="Selecciona una opcion" value=" " color="#a3a3a3"/>
                         <Picker.Item label="ISFT 220"/>
                         <Picker.Item label="ISFT 1"/>
                     </Picker>
@@ -39,7 +39,7 @@ export default function PantallaPreinscripcion() {
                 <Text style={styles.textoLabel}>Carrera:</Text>
                 <View style={styles.contenedorTextBoxPicker}>
                     <Picker style={styles.textBoxPicker}>
-                        <Picker.Item label="Selecciona una opcion"/>
+                        <Picker.Item label="Selecciona una opcion" value=" " color="#a3a3a3"/>
                         <Picker.Item label="Tecnico superior en desarrollo de software"/>
                         <Picker.Item label="Tecnico superior en alimentos"/>
                         <Picker.Item label="Tecnico superior en seguridad e higiene"/>

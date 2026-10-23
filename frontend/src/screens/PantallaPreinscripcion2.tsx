@@ -2,9 +2,9 @@ import Boton from "@/components/Boton";
 import BotonAtras from "@/components/BotonAtras";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useRouter } from "expo-router";
-import { Text } from "expo-router/build/react-navigation";
+import {  } from "expo-router/build/react-navigation";
 import { useState } from "react";
-import { Image, Platform, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Image, Platform, StyleSheet, TouchableOpacity, View, Text, ScrollView } from "react-native";
 
 import TextBox from "../components/Textbox";
 
@@ -20,72 +20,74 @@ export default function PantallaPreinscripcion2() {
                 onPress={() => router.back()}
             />
 
-            <Image
-                source={require("../../assets/images/EduGestLogo.png")}
-                style={styles.logo}
-            /> 
+            <ScrollView contentContainerStyle={styles.contenedorScroll} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
+                <Image
+                    source={require("../../assets/images/EduGestLogo.png")}
+                    style={styles.logo}
+                /> 
 
-            <Text style={styles.textoTitulo}>Formulario de Preinscripción</Text>
+                <Text style={styles.textoTitulo}>Formulario de Preinscripción</Text>
 
-            <View style={styles.formContainer}>
+                <View style={styles.formContainer}>
 
-                <Text style={styles.textoLabel}>DNI</Text>
-                <TextBox
-                    placeholder="DNI"
-                    keyboardType="default"
-                />
+                    <Text style={styles.textoLabel}>DNI</Text>
+                    <TextBox
+                        placeholder="DNI"
+                        keyboardType="default"
+                    />
 
-                <Text style={styles.textoLabel}>Fecha de nacimiento</Text>
-                {Platform.OS === "web" ? (
-                    <input style={styles.textBoxDate} type="date" placeholder="Fecha de nacimiento"></input>
-                ) : (
-                    <>
-                        <TouchableOpacity style={styles.textBox} onPress={() => setMostrarPicker(true)}>
-                            <Text>Fecha de nacimiento</Text>
-                        </TouchableOpacity>
-        
-                        {mostrarPicker && (
-                            <DateTimePicker
-                            style={styles.textBox}
-                            value={fecha}
-                            mode="date"
-                            display={Platform.OS === "ios" ? "spinner" : "default"}
-                            onChange={(event, selectedDate) => {
-                                setMostrarPicker(Platform.OS === "ios");
-                                if(selectedDate){
-                                    setFecha(selectedDate);
-                                }
-                            }}
-                            />
-                        )} 
-                    </>
-                )}
+                    <Text style={styles.textoLabel}>Fecha de nacimiento</Text>
+                    {Platform.OS === "web" ? (
+                        <input style={inputDate} type="date" placeholder="Fecha de nacimiento"></input>
+                    ) : (
+                        <>
+                            <TouchableOpacity style={styles.textBoxDate} onPress={() => setMostrarPicker(true)}>
+                                <Text>Fecha de nacimiento</Text>
+                            </TouchableOpacity>
+            
+                            {mostrarPicker && (
+                                <DateTimePicker
+                                style={styles.textBox}
+                                value={fecha}
+                                mode="date"
+                                display={Platform.OS === "ios" ? "spinner" : "default"}
+                                onChange={(event, selectedDate) => {
+                                    setMostrarPicker(Platform.OS === "ios");
+                                    if(selectedDate){
+                                        setFecha(selectedDate);
+                                    }
+                                }}
+                                />
+                            )} 
+                        </>
+                    )}
 
-                <Text style={styles.textoLabel}>Direccion</Text>
-                <TextBox
-                    placeholder="Direccion"
-                    keyboardType="default"
-                />
+                    <Text style={styles.textoLabel}>Direccion</Text>
+                    <TextBox
+                        placeholder="Direccion"
+                        keyboardType="default"
+                    />
 
-                <Text style={styles.textoLabel}>Telefono</Text>
-                <TextBox
-                    placeholder="Telefono"
-                    keyboardType="default"
-                />
+                    <Text style={styles.textoLabel}>Telefono</Text>
+                    <TextBox
+                        placeholder="Telefono"
+                        keyboardType="default"
+                    />
 
-                <Text style={styles.textoLabel}>Email</Text>
-                <TextBox
-                    placeholder="Email"
-                    keyboardType="default"
-                />
+                    <Text style={styles.textoLabel}>Email</Text>
+                    <TextBox
+                        placeholder="Email"
+                        keyboardType="default"
+                    />
 
-                <Boton
-                    label = "Pre-inscribirse"
-                    onPress ={() => router.push("/preinscripcionexitosa")}
-                    style = {styles.botonMargin}
-                />
+                    <Boton
+                        label = "Pre-inscribirse"
+                        onPress ={() => router.push("/preinscripcionexitosa")}
+                        style = {styles.botonMargin}
+                    />
 
-            </View>
+                </View>
+            </ScrollView>
             
         </View>
     ); 
@@ -95,8 +97,11 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#fafbff",
-        alignItems: "center",
         
+    },
+    contenedorScroll: {
+        alignItems: "center",
+        paddingBottom: 40,
     },
     logo: {
         width: 150,
@@ -158,6 +163,18 @@ const styles = StyleSheet.create({
         fontSize: 16,
         width: 215,
         height: 50,
-        // marginBottom: 15,
     },
 });
+const inputDate: React.CSSProperties = {
+    backgroundColor: "#d9d9d9",
+    border: "2px solid black",
+    borderRadius: 20,
+    padding: "14px 16px",
+    fontSize: 15,
+    fontFamily: "arial",
+    // color: "#a3a3a3",
+    width: 220,
+    height: 50,
+    boxSizing: "border-box",
+    outline: "none",
+};

@@ -1,9 +1,6 @@
-import React from "react";
 import {View, Text, StyleSheet, TouchableOpacity,TextInput, Image, ScrollView, Pressable} from "react-native";
 import { useRouter } from "expo-router";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { useNavigation } from "@react-navigation/native";
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import BotonAtras from "@/components/BotonAtras";
 
 export default function ChatBot() {
