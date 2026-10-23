@@ -1,0 +1,109 @@
+El flujo de información no guarda datos estáticos en la aplicación movil, sino que ejecuta una secuencia coordinada entre el Model, el Controller, la Base de Datos y el Frontend.
+
+1. El Origen de los Datos (Base de Datos PostgreSQL)
+La información no vive en la interfaz, sino en las tablas relacionales de la base de datos:
+
+institucion: Almacena las sedes (ej. ISFT 220).
+
+carrera: Registra las carreras vinculadas a una institución (ej. Tecnicatura en Software).
+
+materia: Contiene las materias asignadas a cada carrera y su plan académico (anio_del_plan).
+
+foro: Actúa como el contenedor principal de interacción ligado a la institución y/o carrera.
+
+charla: Representa cada canal o hilo de discusión. Posee una clave foránea materia_id:
+
+Si materia_id tiene un valor (FK a la tabla materia), la charla pertenece a esa materia específica en un año determinado.
+
+Si materia_id es NULL, la charla se considera una Charla General de la institución.
+
+2. La Consulta a la Base de Datos (foroModel.js)
+Cuando el usuario abre la pantalla de la institución, el backend ejecuta dos consultas SQL a PostgreSQL:
+
+Consulta A: Verificación de Permisos y Cabecera
+Verifica si el usuario autenticado cursa en la institución o carrera para otorgar acceso y extraer los nombres oficiales:
+
+SQL
+SELECT 
+    i.nombre AS institucion_nombre, 
+    c.nombre AS carrera_nombre
+FROM foro f
+LEFT JOIN institucion i ON f.institucion_id = i.id
+LEFT JOIN carrera c ON f.carrera_id = c.id
+WHERE f.id = $1;
+Consulta B: Extracción de Charlas y Materias
+Recupera las charlas cruzándolas mediante un LEFT JOIN con la tabla materia para conocer a qué año del plan pertenecen:
+
+SQL
+SELECT 
+    ch.id AS charla_id, 
+    ch.nombre AS charla_nombre, 
+    m.anio_del_plan
+FROM charla ch
+LEFT JOIN materia m ON ch.materia_id = m.id
+WHERE ch.foro_id = $1
+ORDER BY m.anio_del_plan ASC NULLS FIRST, ch.id ASC;
+3. El Procesamiento y Transformación (foroController.js)
+Una vez que PostgreSQL devuelve las filas de la base de datos, Node.js recibe una lista "plana" de registros. El controlador se encarga de estructurar esa información antes de enviarla al frontend:
+
+Filtra las Charlas Generales:
+Toma todas las filas donde anio_del_plan === null y las agrupa en un array directo (charlasGenerales).
+
+Agrupa las Materias por Año:
+Toma las filas donde anio_del_plan tiene un número (1, 2, 3...) y utiliza la función .reduce() de JavaScript para armar grupos dinámicos por año:
+
+JavaScript
+// Transformación de datos planos a objeto estructurado
+const materiasAgrupadas = charlasMaterias.reduce((acumulador, charla) => {
+    const anio = charla.anio_del_plan;
+    if (!acumulador[anio]) {
+        acumulador[anio] = [];
+    }
+    acumulador[anio].push({
+        id: charla.charla_id,
+        nombre: charla.charla_nombre
+    });
+    return acumulador;
+}, {});
+
+// Convertido a un Array ordenado por año
+const materiasPorAnio = Object.keys(materiasAgrupadas).map(anio => ({
+    anio: parseInt(anio),
+    charlas: materiasAgrupadas[anio]
+}));
+4. La Respuesta JSON de la API
+El servidor Express envía al frontend un único objeto JSON estructurado con los datos procesados en el paso anterior:
+
+JSON
+{
+  "institucion": "ISFT 220",
+  "carrera": "Tecnicatura Superior en Desarrollo de Software",
+  "charlasGenerales": [
+    { "id": 101, "nombre": "Anuncios Institucionales" },
+    { "id": 102, "nombre": "Consultas Administrativas / Bedelía" }
+  ],
+  "materiasPorAnio": [
+    {
+      "anio": 1,
+      "charlas": [
+        { "id": 201, "nombre": "Algoritmos y Estructuras de Datos I" },
+        { "id": 202, "nombre": "Sistemas Operativos" }
+      ]
+    },
+    {
+      "anio": 2,
+      "charlas": [
+        { "id": 301, "nombre": "Base de Datos" },
+        { "id": 302, "nombre": "Programación Web Avanzada" }
+      ]
+    }
+  ]
+}
+5. El Renderizado en la App (PantallaInstitucion.tsx)
+React Native recibe este JSON y mediante métodos iterativos (.map()) dibuja los componentes visuales en la pantalla:
+
+Mapea charlasGenerales para construir los botones de la primera sección.
+
+Mapea el arreglo materiasPorAnio para construir las barras divisorias (1er Año, 2do Año) y los botones de cada materia dinámicamente.
+
+Si el día de mañana agregas una nueva materia o charla en PostgreSQL desde la base de datos o un panel de administración, la aplicación la mostrará automáticamente sin necesidad de modificar el código del frontend o volver a publicar la app.
