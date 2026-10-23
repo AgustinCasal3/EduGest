@@ -52,7 +52,6 @@ export default function PantallaIniciodesesion() {
         setCargando(true);
         try{
             const respuesta = await servicioLogin(datosUsuario.email, datosUsuario.contraseña);
-            console.log( "Token: " + respuesta.token);
             await guardarToken(respuesta.token);
             router.replace("/home");
         }catch (e){

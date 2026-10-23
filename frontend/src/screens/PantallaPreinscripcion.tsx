@@ -28,17 +28,23 @@ export default function PantallaPreinscripcion() {
 
 
                 <Text style={styles.textoLabel}>Institución:</Text>
-                <Picker style={styles.textBox}>
-                    <Picker.Item label="Selecciona una opcion"/>
-                    <Picker.Item label="ISFT 220"/>
-                    <Picker.Item label="ISFT 1"/>
-                </Picker>
+                <View style={styles.contenedorTextBoxPicker}>
+                    <Picker style={styles.textBoxPicker}>
+                        <Picker.Item label="Selecciona una opcion"/>
+                        <Picker.Item label="ISFT 220"/>
+                        <Picker.Item label="ISFT 1"/>
+                    </Picker>
+                </View>
 
                 <Text style={styles.textoLabel}>Carrera:</Text>
-                <TextBox
-                    placeholder="Carrera"
-                    keyboardType="default"
-                />
+                <View style={styles.contenedorTextBoxPicker}>
+                    <Picker style={styles.textBoxPicker}>
+                        <Picker.Item label="Selecciona una opcion"/>
+                        <Picker.Item label="Tecnico superior en desarrollo de software"/>
+                        <Picker.Item label="Tecnico superior en alimentos"/>
+                        <Picker.Item label="Tecnico superior en seguridad e higiene"/>
+                    </Picker>
+                </View>
 
                 <Text style={styles.textoLabel}>Nombre completo:</Text>
                 <TextBox
@@ -119,6 +125,30 @@ const styles = StyleSheet.create({
         paddingVertical: 14,
         fontSize: 16,
         width: 220,
-        // marginBottom: 15,
+    },
+    textBoxPicker: {
+        backgroundColor: "transparent",
+        borderColor: "#d9d9d9",
+        borderRadius: 20,
+        paddingHorizontal: 16,
+        paddingVertical: 14,
+        fontSize: 16,
+        width: 215,
+        height: 55,
+        outlineStyle: "none",
+        outerWidth: 0,
+    } as any,
+    contenedorTextBoxPicker: {
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#d9d9d9",
+        borderWidth: 2,
+        borderColor: "black",
+        borderRadius: 20,
+        paddingHorizontal: 16,
+        paddingVertical: 14,
+        fontSize: 16,
+        width: 220,
+        height: 55,
     },
 });

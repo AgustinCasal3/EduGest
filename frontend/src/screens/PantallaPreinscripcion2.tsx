@@ -29,6 +29,12 @@ export default function PantallaPreinscripcion2() {
 
             <View style={styles.formContainer}>
 
+                <Text style={styles.textoLabel}>DNI</Text>
+                <TextBox
+                    placeholder="DNI"
+                    keyboardType="default"
+                />
+
                 <Text style={styles.textoLabel}>Fecha de nacimiento</Text>
                 {Platform.OS === "web" ? (
                     <input style={styles.textBoxDate} type="date" placeholder="Fecha de nacimiento"></input>

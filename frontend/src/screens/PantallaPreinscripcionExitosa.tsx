@@ -39,9 +39,10 @@ return (
                     onPress ={() => router.push("/")}
                     style = {styles.botonMargin}
                 />
+                
                 <Boton
                     label = "Chatbot"
-                    onPress ={() => router.push("/errorSistema")}
+                    onPress ={() => router.push("/chatbot")}
                     style = {styles.botonMargin}
                 />
 

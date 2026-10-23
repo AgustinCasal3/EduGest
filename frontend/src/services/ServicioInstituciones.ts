@@ -3,7 +3,7 @@ import axios from "axios";
 import { obtenerToken } from "./ServicioToken";
 import { borrarToken } from "./ServicioToken";
 
-const API_URL = "http://192.168.100.8:3000/api";
+import { API_URL } from "./configuracion";
 
 export interface Institucion {
     institucion_id: number;

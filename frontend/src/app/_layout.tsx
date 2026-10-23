@@ -9,6 +9,7 @@ export default function RootLayout() {
             <Stack.Screen name="iniciarsesion" options={{headerShown: false}} />
             <Stack.Screen name="preinscripcionexitosa" options={{headerShown: false}} />
             <Stack.Screen name="errorSistema" options={{headerShown: false}} />
+            <Stack.Screen name="chatbot" options={{headerShown: false}} />
         </Stack>
         
     );

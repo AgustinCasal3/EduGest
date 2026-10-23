@@ -1,12 +1,13 @@
-import { Image, StyleSheet, TouchableOpacity } from "react-native";
+import { Image, StyleSheet, TouchableOpacity, ViewStyle, StyleProp } from "react-native";
 
 interface BotonProps{
     onPress: () => void;
+    style?: StyleProp<ViewStyle>;
 }
 
-export default function BotonAtras({onPress}: BotonProps){
+export default function BotonAtras({onPress, style}: BotonProps){
     return(
-        <TouchableOpacity style={styles.botonAtras} onPress={onPress}>
+        <TouchableOpacity style={[styles.botonAtras, style]} onPress={onPress}>
             <Image 
                 source={require("../../assets/images/BotonAtras.png")}
                 resizeMode="contain"

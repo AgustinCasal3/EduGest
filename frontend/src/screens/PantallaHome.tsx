@@ -1,3 +1,4 @@
+// frontend/src/screens/PantallaHome.tsx
 import { useEffect, useState } from "react";
 import { useRouter } from "expo-router";
 import { StyleSheet, View, Text, FlatList, ActivityIndicator } from "react-native";
@@ -27,7 +28,7 @@ export default function PantallaHome() {
   if (cargando) {
     return (
       <View style={styles.centrado}>
-        <ActivityIndicator size="large" />
+        <ActivityIndicator size="large" color="#5B6FC7" />
       </View>
     );
   }
@@ -35,31 +36,30 @@ export default function PantallaHome() {
   if (error) {
     return (
       <View style={styles.centrado}>
-        <Text>{error}</Text>
+        <Text style={styles.textoError}>{error}</Text>
       </View>
     );
   }
 
   return (
-
     <FlatList
       style={styles.container}
       contentContainerStyle={styles.contenido}
       data={instituciones}
       keyExtractor={(item) => String(item.institucion_id)}
-      ListEmptyComponent={<Text>No estás inscripto en ninguna institución</Text>}
+      ListEmptyComponent={
+        <Text style={styles.textoVacio}>No estás inscripto en ninguna institución</Text>
+      }
       renderItem={({ item }) => (
         <TarjetasInstituciones
           nombreInstitucion={item.institucion_nombre}
-          carreraInstitucion={`${item.carrera_nombre} - ${item.anio_lectivo}`}
+          carreraInstitucion={`${item.carrera_nombre}\n${item.anio_lectivo}`}
           direccioninstitucion={item.direccion}
           onPress={() =>
-            router.push("/"
-            //     {
-            //   pathname: "/institucion/[id]",
-            //   params: { id: String(item.id) },
-            // }
-          )
+            router.push({
+              pathname: "/institucion/[id]",
+              params: { id: String(item.institucion_id) },
+            })
           }
         />
       )}
@@ -71,11 +71,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fafbff",
-    // alignItems: "center",  
   },
   contenido: {
-    // alignItems: "center",   // acá sí va, en contentContainerStyle
-    paddingHorizontal: 16,  // el margen lateral lo da el padding, no un porcentaje
+    paddingHorizontal: 16,
     paddingVertical: 16,
     gap: 16,
   },
@@ -84,5 +82,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#fafbff",
+  },
+  textoError: {
+    color: "#d32f2f",
+    fontSize: 16,
+  },
+  textoVacio: {
+    textAlign: "center",
+    color: "#666",
+    marginTop: 30,
   },
 });
