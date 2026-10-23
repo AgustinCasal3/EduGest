@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 
-const passwordEnTextoPlano = 'celeron';
+const passwordEnTextoPlano = 'ivan';
 const saltRounds = 10; // Nivel de seguridad del cifrado
 
 bcrypt.hash(passwordEnTextoPlano, saltRounds, (err, hash) => {
@@ -12,6 +12,10 @@ bcrypt.hash(passwordEnTextoPlano, saltRounds, (err, hash) => {
 // Usuarios y contraseñas:
 // Agustin Casal: agustin@mail.com agustin
 // Lucas Martinez: lucas@mail.com paragua
-// Mateo Noba: mateo@mail.com mateo123
-// Tobias Noba: tobi@mail.com hondansx1995
-// Guido Herrera: guido@mail.com celeron
+// Mateo Noba: mateo@mail.com mateo
+// Guido Herrera: guido@mail.com guido
+// Tobias Noba: tobias@mail.com tobias
+// Ciro Hudson: ciro@mail.com ciro
+// Alejo Fink: alejo@mail.com alejo
+// Irma Cortez: irma@mail.com irma
+// Ivan Arevalos: ivan@mail.com ivan
