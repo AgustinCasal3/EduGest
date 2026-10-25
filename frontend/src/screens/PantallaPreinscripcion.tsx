@@ -4,11 +4,15 @@ import { Picker } from "@react-native-picker/picker";
 import { useRouter } from "expo-router";
 import { Text } from "expo-router/build/react-navigation";
 import { Image, StyleSheet, View } from "react-native";
+import { useState } from "react";
 
 import TextBox from "../components/Textbox";
 
 export default function PantallaPreinscripcion() {
     const router = useRouter();
+    const [instituto, setInstituto] = useState();
+    const [carrera, setCarrera] = useState();
+    const GRIS = "#a3a3a3";
 
     return (
         <View style={styles.container}>
@@ -29,20 +33,20 @@ export default function PantallaPreinscripcion() {
 
                 <Text style={styles.textoLabel}>Institución:</Text>
                 <View style={styles.contenedorTextBoxPicker}>
-                    <Picker style={styles.textBoxPicker}>
-                        <Picker.Item label="Selecciona una opcion" value=" " color="#a3a3a3"/>
-                        <Picker.Item label="ISFT 220"/>
-                        <Picker.Item label="ISFT 1"/>
+                    <Picker selectedValue={instituto} onValueChange={(v) => setInstituto(v)} style={[styles.textBoxPicker, {color: instituto ? "black" : GRIS}]}>
+                        <Picker.Item label="Selecciona una opcion" value="" color={GRIS}/>
+                        <Picker.Item label="ISFT 220" value={instituto} color="black"/>
+                        <Picker.Item label="ISFT 1" value={instituto} color="black"/>
                     </Picker>
                 </View>
 
                 <Text style={styles.textoLabel}>Carrera:</Text>
                 <View style={styles.contenedorTextBoxPicker}>
-                    <Picker style={styles.textBoxPicker}>
-                        <Picker.Item label="Selecciona una opcion" value=" " color="#a3a3a3"/>
-                        <Picker.Item label="Tecnico superior en desarrollo de software"/>
-                        <Picker.Item label="Tecnico superior en alimentos"/>
-                        <Picker.Item label="Tecnico superior en seguridad e higiene"/>
+                    <Picker selectedValue={carrera} onValueChange={(v) => setCarrera(v)} style={[styles.textBoxPicker, {color: carrera ? "black" : GRIS}]}>
+                        <Picker.Item label="Selecciona una opcion" value="" color={GRIS}/>
+                        <Picker.Item label="Tecnico superior en desarrollo de software" value={carrera} color="black"/>
+                        <Picker.Item label="Tecnico superior en alimentos" value={carrera} color="black"/>
+                        <Picker.Item label="Tecnico superior en seguridad e higiene" value={carrera} color="black"/>
                     </Picker>
                 </View>
 

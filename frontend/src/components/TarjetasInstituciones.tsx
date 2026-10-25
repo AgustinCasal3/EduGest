@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     },
 
     flechaDerecha: {
-        
+        marginRight: "2%",
     },
 
     botonMenu: {

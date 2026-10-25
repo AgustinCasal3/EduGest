@@ -2,6 +2,7 @@ import { useRouter } from "expo-router";
 import { Image, StyleSheet, View } from "react-native";
 import Boton from "../components/Boton";
 
+//Prueba en pantalla inicio :D por favor
 export default function PantallaInicio() {
     const router = useRouter();
 
