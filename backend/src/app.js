@@ -8,6 +8,7 @@ const authRoutes = require('./routes/authRoutes');
 const homeRoutes = require('./routes/homeRoutes');
 const foroRoutes = require('./routes/foroRoutes');
 const preinscripcionRoutes = require('./routes/preinscripcionRoutes');
+const chatbotRoutes = require('./routes/chatbotRoutes');
 
 const app = express();
 
@@ -21,6 +22,8 @@ app.use('/api/home', homeRoutes);
 app.use('/api/foros', foroRoutes);
 
 app.use('/api/preinscripciones', preinscripcionRoutes);
+
+app.use('/api/chatbot', chatbotRoutes);
 
 app.get('/', (req, res) => {
     res.json({ message: 'API de gestion educativa funcionando' });

@@ -1,0 +1,3782 @@
+--
+-- PostgreSQL database dump
+--
+
+\restrict Kow8snIT8cHZuETKEoENUa8YIhlvfVkseM7mcRFZcApnjU0xogsFsRfcGn7GNmR
+
+-- Dumped from database version 18.6
+-- Dumped by pg_dump version 18.6
+
+-- Started on 2026-10-30 12:06:31
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+DROP DATABASE edugest;
+--
+-- TOC entry 5414 (class 1262 OID 17840)
+-- Name: edugest; Type: DATABASE; Schema: -; Owner: postgres
+--
+
+CREATE DATABASE edugest WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_PROVIDER = libc LOCALE = 'Spanish_Argentina.1252';
+
+
+ALTER DATABASE edugest OWNER TO postgres;
+
+\unrestrict Kow8snIT8cHZuETKEoENUa8YIhlvfVkseM7mcRFZcApnjU0xogsFsRfcGn7GNmR
+\connect edugest
+\restrict Kow8snIT8cHZuETKEoENUa8YIhlvfVkseM7mcRFZcApnjU0xogsFsRfcGn7GNmR
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 922 (class 1247 OID 17842)
+-- Name: cuatrimestre; Type: TYPE; Schema: public; Owner: postgres
+--
+
+CREATE TYPE public.cuatrimestre AS ENUM (
+    'PRIMERO',
+    'SEGUNDO',
+    'ANUAL'
+);
+
+
+ALTER TYPE public.cuatrimestre OWNER TO postgres;
+
+--
+-- TOC entry 925 (class 1247 OID 17850)
+-- Name: estado_academico; Type: TYPE; Schema: public; Owner: postgres
+--
+
+CREATE TYPE public.estado_academico AS ENUM (
+    'ACTIVO',
+    'DE_LICENCIA',
+    'EGRESADO'
+);
+
+
+ALTER TYPE public.estado_academico OWNER TO postgres;
+
+--
+-- TOC entry 928 (class 1247 OID 17858)
+-- Name: estado_asistencia; Type: TYPE; Schema: public; Owner: postgres
+--
+
+CREATE TYPE public.estado_asistencia AS ENUM (
+    'PRESENTE',
+    'AUSENTE',
+    'TARDE',
+    'JUSTIFICADO'
+);
+
+
+ALTER TYPE public.estado_asistencia OWNER TO postgres;
+
+--
+-- TOC entry 931 (class 1247 OID 17868)
+-- Name: estado_cursada; Type: TYPE; Schema: public; Owner: postgres
+--
+
+CREATE TYPE public.estado_cursada AS ENUM (
+    'CURSANDO',
+    'REGULAR',
+    'LIBRE',
+    'ABANDONO'
+);
+
+
+ALTER TYPE public.estado_cursada OWNER TO postgres;
+
+--
+-- TOC entry 934 (class 1247 OID 17878)
+-- Name: estado_documento; Type: TYPE; Schema: public; Owner: postgres
+--
+
+CREATE TYPE public.estado_documento AS ENUM (
+    'PENDIENTE',
+    'APROBADO',
+    'RECHAZADO'
+);
+
+
+ALTER TYPE public.estado_documento OWNER TO postgres;
+
+--
+-- TOC entry 937 (class 1247 OID 17886)
+-- Name: estado_firma; Type: TYPE; Schema: public; Owner: postgres
+--
+
+CREATE TYPE public.estado_firma AS ENUM (
+    'PENDIENTE',
+    'FIRMADA'
+);
+
+
+ALTER TYPE public.estado_firma OWNER TO postgres;
+
+--
+-- TOC entry 940 (class 1247 OID 17892)
+-- Name: estado_inscripcion_evento; Type: TYPE; Schema: public; Owner: postgres
+--
+
+CREATE TYPE public.estado_inscripcion_evento AS ENUM (
+    'INSCRIPTO',
+    'CANCELADO',
+    'ASISTIO'
+);
+
+
+ALTER TYPE public.estado_inscripcion_evento OWNER TO postgres;
+
+--
+-- TOC entry 943 (class 1247 OID 17900)
+-- Name: estado_inscripcion_mesa; Type: TYPE; Schema: public; Owner: postgres
+--
+
+CREATE TYPE public.estado_inscripcion_mesa AS ENUM (
+    'INSCRIPTO',
+    'AUSENTE',
+    'APROBADO',
+    'DESAPROBADO'
+);
+
+
+ALTER TYPE public.estado_inscripcion_mesa OWNER TO postgres;
+
+--
+-- TOC entry 946 (class 1247 OID 17910)
+-- Name: estado_lectura; Type: TYPE; Schema: public; Owner: postgres
+--
+
+CREATE TYPE public.estado_lectura AS ENUM (
+    'LEIDA',
+    'NO_LEIDA'
+);
+
+
+ALTER TYPE public.estado_lectura OWNER TO postgres;
+
+--
+-- TOC entry 949 (class 1247 OID 17916)
+-- Name: estado_licencia; Type: TYPE; Schema: public; Owner: postgres
+--
+
+CREATE TYPE public.estado_licencia AS ENUM (
+    'PENDIENTE',
+    'APROBADA',
+    'RECHAZADA'
+);
+
+
+ALTER TYPE public.estado_licencia OWNER TO postgres;
+
+--
+-- TOC entry 952 (class 1247 OID 17924)
+-- Name: estado_preinscripcion; Type: TYPE; Schema: public; Owner: postgres
+--
+
+CREATE TYPE public.estado_preinscripcion AS ENUM (
+    'PENDIENTE',
+    'APROBADA',
+    'RECHAZADA'
+);
+
+
+ALTER TYPE public.estado_preinscripcion OWNER TO postgres;
+
+--
+-- TOC entry 955 (class 1247 OID 17932)
+-- Name: estado_publicacion; Type: TYPE; Schema: public; Owner: postgres
+--
+
+CREATE TYPE public.estado_publicacion AS ENUM (
+    'ACTIVA',
+    'CERRADA',
+    'ELIMINADA'
+);
+
+
+ALTER TYPE public.estado_publicacion OWNER TO postgres;
+
+--
+-- TOC entry 958 (class 1247 OID 17940)
+-- Name: tipo_acta; Type: TYPE; Schema: public; Owner: postgres
+--
+
+CREATE TYPE public.tipo_acta AS ENUM (
+    'EXAMEN',
+    'REUNION',
+    'DISCIPLINARIA',
+    'OTRO'
+);
+
+
+ALTER TYPE public.tipo_acta OWNER TO postgres;
+
+--
+-- TOC entry 961 (class 1247 OID 17950)
+-- Name: tipo_chat; Type: TYPE; Schema: public; Owner: postgres
+--
+
+CREATE TYPE public.tipo_chat AS ENUM (
+    'CURSO',
+    'PRIVADO',
+    'ADMINISTRATIVO'
+);
+
+
+ALTER TYPE public.tipo_chat OWNER TO postgres;
+
+--
+-- TOC entry 964 (class 1247 OID 17958)
+-- Name: tipo_correlatividad; Type: TYPE; Schema: public; Owner: postgres
+--
+
+CREATE TYPE public.tipo_correlatividad AS ENUM (
+    'PARA_CURSAR',
+    'PARA_RENDIR'
+);
+
+
+ALTER TYPE public.tipo_correlatividad OWNER TO postgres;
+
+--
+-- TOC entry 967 (class 1247 OID 17964)
+-- Name: tipo_documento; Type: TYPE; Schema: public; Owner: postgres
+--
+
+CREATE TYPE public.tipo_documento AS ENUM (
+    'DNI',
+    'CERTIFICADO_MEDICO',
+    'ANALITICO',
+    'TITULO',
+    'OTRO'
+);
+
+
+ALTER TYPE public.tipo_documento OWNER TO postgres;
+
+--
+-- TOC entry 970 (class 1247 OID 17976)
+-- Name: tipo_foro; Type: TYPE; Schema: public; Owner: postgres
+--
+
+CREATE TYPE public.tipo_foro AS ENUM (
+    'INSTITUCIONAL',
+    'CARRERA',
+    'MATERIA',
+    'EGRESADOS'
+);
+
+
+ALTER TYPE public.tipo_foro OWNER TO postgres;
+
+--
+-- TOC entry 973 (class 1247 OID 17986)
+-- Name: tipo_nota; Type: TYPE; Schema: public; Owner: postgres
+--
+
+CREATE TYPE public.tipo_nota AS ENUM (
+    'PARCIAL',
+    'TRABAJO_PRACTICO',
+    'FINAL',
+    'CONCEPTO'
+);
+
+
+ALTER TYPE public.tipo_nota OWNER TO postgres;
+
+--
+-- TOC entry 976 (class 1247 OID 17996)
+-- Name: tipo_notificacion; Type: TYPE; Schema: public; Owner: postgres
+--
+
+CREATE TYPE public.tipo_notificacion AS ENUM (
+    'ACADEMICA',
+    'ADMINISTRATIVA',
+    'SISTEMA',
+    'CHATBOT',
+    'EVENTO',
+    'OTRA'
+);
+
+
+ALTER TYPE public.tipo_notificacion OWNER TO postgres;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 219 (class 1259 OID 18009)
+-- Name: acta; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.acta (
+    id bigint NOT NULL,
+    creada_por_id bigint NOT NULL,
+    tipo public.tipo_acta NOT NULL,
+    fecha_creacion timestamp without time zone NOT NULL,
+    contenido text
+);
+
+
+ALTER TABLE public.acta OWNER TO postgres;
+
+--
+-- TOC entry 220 (class 1259 OID 18018)
+-- Name: acta_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.acta_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.acta_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 5415 (class 0 OID 0)
+-- Dependencies: 220
+-- Name: acta_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.acta_id_seq OWNED BY public.acta.id;
+
+
+--
+-- TOC entry 221 (class 1259 OID 18019)
+-- Name: asistencia; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.asistencia (
+    id bigint NOT NULL,
+    curso_id bigint NOT NULL,
+    estudiante_id bigint NOT NULL,
+    registrada_por_id bigint NOT NULL,
+    fecha date NOT NULL,
+    estado public.estado_asistencia NOT NULL,
+    observaciones text
+);
+
+
+ALTER TABLE public.asistencia OWNER TO postgres;
+
+--
+-- TOC entry 222 (class 1259 OID 18030)
+-- Name: asistencia_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.asistencia_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.asistencia_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 5416 (class 0 OID 0)
+-- Dependencies: 222
+-- Name: asistencia_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.asistencia_id_seq OWNED BY public.asistencia.id;
+
+
+--
+-- TOC entry 223 (class 1259 OID 18031)
+-- Name: carrera; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.carrera (
+    id bigint NOT NULL,
+    institucion_id bigint NOT NULL,
+    nombre character varying(255) NOT NULL,
+    titulo_otorgado character varying(255),
+    duracion_anios integer
+);
+
+
+ALTER TABLE public.carrera OWNER TO postgres;
+
+--
+-- TOC entry 224 (class 1259 OID 18039)
+-- Name: carrera_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.carrera_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.carrera_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 5417 (class 0 OID 0)
+-- Dependencies: 224
+-- Name: carrera_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.carrera_id_seq OWNED BY public.carrera.id;
+
+
+--
+-- TOC entry 225 (class 1259 OID 18040)
+-- Name: charla; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.charla (
+    id bigint NOT NULL,
+    foro_id bigint NOT NULL,
+    nombre character varying(255) NOT NULL,
+    materia_id bigint
+);
+
+
+ALTER TABLE public.charla OWNER TO postgres;
+
+--
+-- TOC entry 226 (class 1259 OID 18046)
+-- Name: charla_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.charla_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.charla_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 5418 (class 0 OID 0)
+-- Dependencies: 226
+-- Name: charla_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.charla_id_seq OWNED BY public.charla.id;
+
+
+--
+-- TOC entry 227 (class 1259 OID 18047)
+-- Name: chat; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.chat (
+    id bigint NOT NULL,
+    curso_id bigint,
+    tipo public.tipo_chat NOT NULL,
+    fecha_creacion timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.chat OWNER TO postgres;
+
+--
+-- TOC entry 228 (class 1259 OID 18053)
+-- Name: chat_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.chat_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.chat_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 5419 (class 0 OID 0)
+-- Dependencies: 228
+-- Name: chat_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.chat_id_seq OWNED BY public.chat.id;
+
+
+--
+-- TOC entry 287 (class 1259 OID 18758)
+-- Name: chatbot_conversacion; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.chatbot_conversacion (
+    id bigint NOT NULL,
+    usuario_id bigint NOT NULL,
+    titulo character varying(255) DEFAULT 'Nueva consulta'::character varying NOT NULL,
+    fecha_creacion timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    activo boolean DEFAULT true
+);
+
+
+ALTER TABLE public.chatbot_conversacion OWNER TO postgres;
+
+--
+-- TOC entry 286 (class 1259 OID 18757)
+-- Name: chatbot_conversacion_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.chatbot_conversacion_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.chatbot_conversacion_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 5420 (class 0 OID 0)
+-- Dependencies: 286
+-- Name: chatbot_conversacion_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.chatbot_conversacion_id_seq OWNED BY public.chatbot_conversacion.id;
+
+
+--
+-- TOC entry 289 (class 1259 OID 18777)
+-- Name: chatbot_mensaje; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.chatbot_mensaje (
+    id bigint NOT NULL,
+    conversacion_id bigint NOT NULL,
+    rol character varying(20) NOT NULL,
+    contenido text NOT NULL,
+    fecha_envio timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+
+ALTER TABLE public.chatbot_mensaje OWNER TO postgres;
+
+--
+-- TOC entry 288 (class 1259 OID 18776)
+-- Name: chatbot_mensaje_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.chatbot_mensaje_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.chatbot_mensaje_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 5421 (class 0 OID 0)
+-- Dependencies: 288
+-- Name: chatbot_mensaje_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.chatbot_mensaje_id_seq OWNED BY public.chatbot_mensaje.id;
+
+
+--
+-- TOC entry 229 (class 1259 OID 18054)
+-- Name: consulta_chatbot; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.consulta_chatbot (
+    id bigint NOT NULL,
+    consultante_id bigint NOT NULL,
+    derivada_a_id bigint,
+    pregunta text NOT NULL,
+    respuesta text,
+    fecha timestamp without time zone NOT NULL,
+    resuelta boolean DEFAULT false
+);
+
+
+ALTER TABLE public.consulta_chatbot OWNER TO postgres;
+
+--
+-- TOC entry 230 (class 1259 OID 18064)
+-- Name: consulta_chatbot_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.consulta_chatbot_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.consulta_chatbot_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 5422 (class 0 OID 0)
+-- Dependencies: 230
+-- Name: consulta_chatbot_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.consulta_chatbot_id_seq OWNED BY public.consulta_chatbot.id;
+
+
+--
+-- TOC entry 231 (class 1259 OID 18065)
+-- Name: correlatividad; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.correlatividad (
+    id bigint NOT NULL,
+    materia_id bigint NOT NULL,
+    materia_requerida_id bigint NOT NULL,
+    tipo public.tipo_correlatividad NOT NULL
+);
+
+
+ALTER TABLE public.correlatividad OWNER TO postgres;
+
+--
+-- TOC entry 232 (class 1259 OID 18072)
+-- Name: correlatividad_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.correlatividad_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.correlatividad_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 5423 (class 0 OID 0)
+-- Dependencies: 232
+-- Name: correlatividad_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.correlatividad_id_seq OWNED BY public.correlatividad.id;
+
+
+--
+-- TOC entry 233 (class 1259 OID 18073)
+-- Name: curso; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.curso (
+    id bigint NOT NULL,
+    materia_id bigint NOT NULL,
+    anio_lectivo integer NOT NULL,
+    cuatrimestre public.cuatrimestre NOT NULL,
+    horario character varying(255),
+    aula character varying(100)
+);
+
+
+ALTER TABLE public.curso OWNER TO postgres;
+
+--
+-- TOC entry 234 (class 1259 OID 18080)
+-- Name: curso_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.curso_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.curso_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 5424 (class 0 OID 0)
+-- Dependencies: 234
+-- Name: curso_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.curso_id_seq OWNED BY public.curso.id;
+
+
+--
+-- TOC entry 235 (class 1259 OID 18081)
+-- Name: director; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.director (
+    id bigint NOT NULL,
+    numero_empleado character varying(50) NOT NULL
+);
+
+
+ALTER TABLE public.director OWNER TO postgres;
+
+--
+-- TOC entry 236 (class 1259 OID 18086)
+-- Name: docente; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.docente (
+    id bigint NOT NULL,
+    numero_docente character varying(50) NOT NULL,
+    titulo character varying(255),
+    estado public.estado_academico NOT NULL
+);
+
+
+ALTER TABLE public.docente OWNER TO postgres;
+
+--
+-- TOC entry 237 (class 1259 OID 18092)
+-- Name: docente_curso; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.docente_curso (
+    curso_id bigint NOT NULL,
+    docente_id bigint NOT NULL
+);
+
+
+ALTER TABLE public.docente_curso OWNER TO postgres;
+
+--
+-- TOC entry 238 (class 1259 OID 18097)
+-- Name: docente_mesa_examen; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.docente_mesa_examen (
+    mesa_examen_id bigint NOT NULL,
+    docente_id bigint NOT NULL
+);
+
+
+ALTER TABLE public.docente_mesa_examen OWNER TO postgres;
+
+--
+-- TOC entry 239 (class 1259 OID 18102)
+-- Name: documento; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.documento (
+    id bigint NOT NULL,
+    subido_por_id bigint NOT NULL,
+    revisado_por_id bigint,
+    licencia_id bigint,
+    legajo_id bigint,
+    nombre_archivo character varying(255) NOT NULL,
+    url character varying(500) NOT NULL,
+    tipo_documento public.tipo_documento NOT NULL,
+    fecha_subida timestamp without time zone NOT NULL,
+    estado public.estado_documento NOT NULL
+);
+
+
+ALTER TABLE public.documento OWNER TO postgres;
+
+--
+-- TOC entry 240 (class 1259 OID 18114)
+-- Name: documento_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.documento_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.documento_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 5425 (class 0 OID 0)
+-- Dependencies: 240
+-- Name: documento_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.documento_id_seq OWNED BY public.documento.id;
+
+
+--
+-- TOC entry 241 (class 1259 OID 18115)
+-- Name: estudiante; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.estudiante (
+    id bigint NOT NULL,
+    numero_estudiante character varying(50) NOT NULL,
+    estado public.estado_academico NOT NULL
+);
+
+
+ALTER TABLE public.estudiante OWNER TO postgres;
+
+--
+-- TOC entry 242 (class 1259 OID 18121)
+-- Name: evento; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.evento (
+    id bigint NOT NULL,
+    institucion_id bigint,
+    nombre character varying(255) NOT NULL,
+    descripcion text,
+    fecha timestamp without time zone NOT NULL,
+    lugar character varying(255)
+);
+
+
+ALTER TABLE public.evento OWNER TO postgres;
+
+--
+-- TOC entry 243 (class 1259 OID 18129)
+-- Name: evento_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.evento_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.evento_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 5426 (class 0 OID 0)
+-- Dependencies: 243
+-- Name: evento_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.evento_id_seq OWNED BY public.evento.id;
+
+
+--
+-- TOC entry 244 (class 1259 OID 18130)
+-- Name: firma_acta; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.firma_acta (
+    id bigint NOT NULL,
+    acta_id bigint NOT NULL,
+    firmante_id bigint NOT NULL,
+    estado public.estado_firma NOT NULL,
+    fecha_firma timestamp without time zone
+);
+
+
+ALTER TABLE public.firma_acta OWNER TO postgres;
+
+--
+-- TOC entry 245 (class 1259 OID 18137)
+-- Name: firma_acta_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.firma_acta_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.firma_acta_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 5427 (class 0 OID 0)
+-- Dependencies: 245
+-- Name: firma_acta_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.firma_acta_id_seq OWNED BY public.firma_acta.id;
+
+
+--
+-- TOC entry 246 (class 1259 OID 18138)
+-- Name: foro; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.foro (
+    id bigint NOT NULL,
+    institucion_id bigint,
+    carrera_id bigint,
+    materia_id bigint,
+    nombre character varying(255) NOT NULL,
+    tipo public.tipo_foro NOT NULL
+);
+
+
+ALTER TABLE public.foro OWNER TO postgres;
+
+--
+-- TOC entry 247 (class 1259 OID 18144)
+-- Name: foro_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.foro_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.foro_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 5428 (class 0 OID 0)
+-- Dependencies: 247
+-- Name: foro_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.foro_id_seq OWNED BY public.foro.id;
+
+
+--
+-- TOC entry 248 (class 1259 OID 18145)
+-- Name: inscripcion_curso; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.inscripcion_curso (
+    id bigint NOT NULL,
+    curso_id bigint NOT NULL,
+    estudiante_id bigint NOT NULL,
+    fecha_inscripcion date NOT NULL,
+    estado_cursada public.estado_cursada NOT NULL
+);
+
+
+ALTER TABLE public.inscripcion_curso OWNER TO postgres;
+
+--
+-- TOC entry 249 (class 1259 OID 18153)
+-- Name: inscripcion_curso_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.inscripcion_curso_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.inscripcion_curso_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 5429 (class 0 OID 0)
+-- Dependencies: 249
+-- Name: inscripcion_curso_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.inscripcion_curso_id_seq OWNED BY public.inscripcion_curso.id;
+
+
+--
+-- TOC entry 250 (class 1259 OID 18154)
+-- Name: inscripcion_evento; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.inscripcion_evento (
+    id bigint NOT NULL,
+    evento_id bigint NOT NULL,
+    estudiante_id bigint NOT NULL,
+    fecha_inscripcion timestamp without time zone NOT NULL,
+    estado public.estado_inscripcion_evento NOT NULL
+);
+
+
+ALTER TABLE public.inscripcion_evento OWNER TO postgres;
+
+--
+-- TOC entry 251 (class 1259 OID 18162)
+-- Name: inscripcion_evento_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.inscripcion_evento_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.inscripcion_evento_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 5430 (class 0 OID 0)
+-- Dependencies: 251
+-- Name: inscripcion_evento_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.inscripcion_evento_id_seq OWNED BY public.inscripcion_evento.id;
+
+
+--
+-- TOC entry 252 (class 1259 OID 18163)
+-- Name: inscripcion_mesa; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.inscripcion_mesa (
+    id bigint NOT NULL,
+    mesa_examen_id bigint NOT NULL,
+    estudiante_id bigint NOT NULL,
+    fecha_inscripcion date NOT NULL,
+    estado public.estado_inscripcion_mesa NOT NULL,
+    nota double precision
+);
+
+
+ALTER TABLE public.inscripcion_mesa OWNER TO postgres;
+
+--
+-- TOC entry 253 (class 1259 OID 18171)
+-- Name: inscripcion_mesa_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.inscripcion_mesa_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.inscripcion_mesa_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 5431 (class 0 OID 0)
+-- Dependencies: 253
+-- Name: inscripcion_mesa_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.inscripcion_mesa_id_seq OWNED BY public.inscripcion_mesa.id;
+
+
+--
+-- TOC entry 254 (class 1259 OID 18172)
+-- Name: institucion; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.institucion (
+    id bigint NOT NULL,
+    nombre character varying(255) NOT NULL,
+    cuit character varying(50),
+    direccion character varying(255),
+    telefono character varying(50)
+);
+
+
+ALTER TABLE public.institucion OWNER TO postgres;
+
+--
+-- TOC entry 255 (class 1259 OID 18179)
+-- Name: institucion_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.institucion_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.institucion_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 5432 (class 0 OID 0)
+-- Dependencies: 255
+-- Name: institucion_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.institucion_id_seq OWNED BY public.institucion.id;
+
+
+--
+-- TOC entry 256 (class 1259 OID 18180)
+-- Name: lectura_mensaje; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.lectura_mensaje (
+    id bigint NOT NULL,
+    mensaje_id bigint NOT NULL,
+    usuario_id bigint NOT NULL,
+    fecha_lectura timestamp without time zone
+);
+
+
+ALTER TABLE public.lectura_mensaje OWNER TO postgres;
+
+--
+-- TOC entry 257 (class 1259 OID 18186)
+-- Name: lectura_mensaje_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.lectura_mensaje_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.lectura_mensaje_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 5433 (class 0 OID 0)
+-- Dependencies: 257
+-- Name: lectura_mensaje_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.lectura_mensaje_id_seq OWNED BY public.lectura_mensaje.id;
+
+
+--
+-- TOC entry 258 (class 1259 OID 18187)
+-- Name: legajo; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.legajo (
+    id bigint NOT NULL,
+    usuario_id bigint NOT NULL,
+    fecha_creacion date NOT NULL
+);
+
+
+ALTER TABLE public.legajo OWNER TO postgres;
+
+--
+-- TOC entry 259 (class 1259 OID 18193)
+-- Name: legajo_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.legajo_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.legajo_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 5434 (class 0 OID 0)
+-- Dependencies: 259
+-- Name: legajo_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.legajo_id_seq OWNED BY public.legajo.id;
+
+
+--
+-- TOC entry 260 (class 1259 OID 18194)
+-- Name: licencia; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.licencia (
+    id bigint NOT NULL,
+    solicitante_id bigint NOT NULL,
+    aprobada_por_id bigint,
+    fecha_solicitud date NOT NULL,
+    periodo_desde date NOT NULL,
+    periodo_hasta date NOT NULL,
+    motivo text,
+    estado public.estado_licencia NOT NULL
+);
+
+
+ALTER TABLE public.licencia OWNER TO postgres;
+
+--
+-- TOC entry 261 (class 1259 OID 18205)
+-- Name: licencia_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.licencia_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.licencia_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 5435 (class 0 OID 0)
+-- Dependencies: 261
+-- Name: licencia_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.licencia_id_seq OWNED BY public.licencia.id;
+
+
+--
+-- TOC entry 262 (class 1259 OID 18206)
+-- Name: materia; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.materia (
+    id bigint NOT NULL,
+    carrera_id bigint NOT NULL,
+    nombre character varying(255) NOT NULL,
+    anio_del_plan integer,
+    carga_horaria integer
+);
+
+
+ALTER TABLE public.materia OWNER TO postgres;
+
+--
+-- TOC entry 263 (class 1259 OID 18212)
+-- Name: materia_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.materia_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.materia_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 5436 (class 0 OID 0)
+-- Dependencies: 263
+-- Name: materia_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.materia_id_seq OWNED BY public.materia.id;
+
+
+--
+-- TOC entry 264 (class 1259 OID 18213)
+-- Name: mensaje; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.mensaje (
+    id bigint NOT NULL,
+    chat_id bigint NOT NULL,
+    autor_id bigint NOT NULL,
+    contenido text NOT NULL,
+    fecha_hora timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.mensaje OWNER TO postgres;
+
+--
+-- TOC entry 265 (class 1259 OID 18223)
+-- Name: mensaje_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.mensaje_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.mensaje_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 5437 (class 0 OID 0)
+-- Dependencies: 265
+-- Name: mensaje_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.mensaje_id_seq OWNED BY public.mensaje.id;
+
+
+--
+-- TOC entry 266 (class 1259 OID 18224)
+-- Name: mesa_examen; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.mesa_examen (
+    id bigint NOT NULL,
+    materia_id bigint NOT NULL,
+    fecha date NOT NULL,
+    horario character varying(100),
+    aula character varying(100),
+    llamado integer
+);
+
+
+ALTER TABLE public.mesa_examen OWNER TO postgres;
+
+--
+-- TOC entry 267 (class 1259 OID 18230)
+-- Name: mesa_examen_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.mesa_examen_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.mesa_examen_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 5438 (class 0 OID 0)
+-- Dependencies: 267
+-- Name: mesa_examen_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.mesa_examen_id_seq OWNED BY public.mesa_examen.id;
+
+
+--
+-- TOC entry 268 (class 1259 OID 18231)
+-- Name: nota; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.nota (
+    id bigint NOT NULL,
+    inscripcion_curso_id bigint NOT NULL,
+    tipo public.tipo_nota NOT NULL,
+    valor double precision NOT NULL,
+    fecha date NOT NULL,
+    observaciones text
+);
+
+
+ALTER TABLE public.nota OWNER TO postgres;
+
+--
+-- TOC entry 269 (class 1259 OID 18241)
+-- Name: nota_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.nota_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.nota_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 5439 (class 0 OID 0)
+-- Dependencies: 269
+-- Name: nota_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.nota_id_seq OWNED BY public.nota.id;
+
+
+--
+-- TOC entry 270 (class 1259 OID 18242)
+-- Name: notificacion; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.notificacion (
+    id bigint NOT NULL,
+    emisor_id bigint,
+    destinatario_id bigint NOT NULL,
+    fecha timestamp without time zone NOT NULL,
+    titulo character varying(255) NOT NULL,
+    contenido text NOT NULL,
+    estado_lectura public.estado_lectura NOT NULL,
+    tipo public.tipo_notificacion NOT NULL
+);
+
+
+ALTER TABLE public.notificacion OWNER TO postgres;
+
+--
+-- TOC entry 271 (class 1259 OID 18254)
+-- Name: notificacion_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.notificacion_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.notificacion_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 5440 (class 0 OID 0)
+-- Dependencies: 271
+-- Name: notificacion_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.notificacion_id_seq OWNED BY public.notificacion.id;
+
+
+--
+-- TOC entry 272 (class 1259 OID 18255)
+-- Name: participante_chat; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.participante_chat (
+    id bigint NOT NULL,
+    chat_id bigint NOT NULL,
+    usuario_id bigint NOT NULL,
+    fecha_ingreso timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.participante_chat OWNER TO postgres;
+
+--
+-- TOC entry 273 (class 1259 OID 18262)
+-- Name: participante_chat_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.participante_chat_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.participante_chat_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 5441 (class 0 OID 0)
+-- Dependencies: 273
+-- Name: participante_chat_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.participante_chat_id_seq OWNED BY public.participante_chat.id;
+
+
+--
+-- TOC entry 274 (class 1259 OID 18263)
+-- Name: preceptor; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.preceptor (
+    id bigint NOT NULL,
+    numero_empleado character varying(50) NOT NULL
+);
+
+
+ALTER TABLE public.preceptor OWNER TO postgres;
+
+--
+-- TOC entry 275 (class 1259 OID 18268)
+-- Name: preinscripcion; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.preinscripcion (
+    id bigint NOT NULL,
+    institucion_id bigint,
+    gestionada_por_id bigint,
+    nombre character varying(100) NOT NULL,
+    apellido character varying(100) NOT NULL,
+    dni character varying(20) NOT NULL,
+    email character varying(150) NOT NULL,
+    fecha_solicitud date NOT NULL,
+    estado public.estado_preinscripcion NOT NULL,
+    carrera_id bigint,
+    fecha_nacimiento date,
+    telefono character varying(50),
+    direccion character varying(255)
+);
+
+
+ALTER TABLE public.preinscripcion OWNER TO postgres;
+
+--
+-- TOC entry 276 (class 1259 OID 18280)
+-- Name: preinscripcion_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.preinscripcion_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.preinscripcion_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 5442 (class 0 OID 0)
+-- Dependencies: 276
+-- Name: preinscripcion_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.preinscripcion_id_seq OWNED BY public.preinscripcion.id;
+
+
+--
+-- TOC entry 277 (class 1259 OID 18281)
+-- Name: publicacion; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.publicacion (
+    id bigint NOT NULL,
+    charla_id bigint NOT NULL,
+    autor_id bigint NOT NULL,
+    titulo character varying(255) NOT NULL,
+    contenido text NOT NULL,
+    fecha_creacion timestamp without time zone NOT NULL,
+    destacada boolean DEFAULT false,
+    estado public.estado_publicacion NOT NULL
+);
+
+
+ALTER TABLE public.publicacion OWNER TO postgres;
+
+--
+-- TOC entry 278 (class 1259 OID 18294)
+-- Name: publicacion_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.publicacion_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.publicacion_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 5443 (class 0 OID 0)
+-- Dependencies: 278
+-- Name: publicacion_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.publicacion_id_seq OWNED BY public.publicacion.id;
+
+
+--
+-- TOC entry 279 (class 1259 OID 18295)
+-- Name: respuesta; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.respuesta (
+    id bigint NOT NULL,
+    publicacion_id bigint NOT NULL,
+    autor_id bigint NOT NULL,
+    contenido text NOT NULL,
+    fecha_creacion timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.respuesta OWNER TO postgres;
+
+--
+-- TOC entry 280 (class 1259 OID 18305)
+-- Name: respuesta_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.respuesta_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.respuesta_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 5444 (class 0 OID 0)
+-- Dependencies: 280
+-- Name: respuesta_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.respuesta_id_seq OWNED BY public.respuesta.id;
+
+
+--
+-- TOC entry 281 (class 1259 OID 18306)
+-- Name: secretario; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.secretario (
+    id bigint NOT NULL,
+    numero_empleado character varying(50) NOT NULL
+);
+
+
+ALTER TABLE public.secretario OWNER TO postgres;
+
+--
+-- TOC entry 282 (class 1259 OID 18311)
+-- Name: usuario; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.usuario (
+    id bigint NOT NULL,
+    dni character varying(20) NOT NULL,
+    nombre character varying(100) NOT NULL,
+    apellido character varying(100) NOT NULL,
+    email character varying(150) NOT NULL,
+    password_hash character varying(255) NOT NULL,
+    telefono character varying(50),
+    fecha_nacimiento date,
+    direccion character varying(255)
+);
+
+
+ALTER TABLE public.usuario OWNER TO postgres;
+
+--
+-- TOC entry 283 (class 1259 OID 18322)
+-- Name: usuario_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.usuario_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.usuario_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 5445 (class 0 OID 0)
+-- Dependencies: 283
+-- Name: usuario_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.usuario_id_seq OWNED BY public.usuario.id;
+
+
+--
+-- TOC entry 284 (class 1259 OID 18323)
+-- Name: usuario_institucion; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.usuario_institucion (
+    id bigint NOT NULL,
+    usuario_id bigint NOT NULL,
+    institucion_id bigint NOT NULL,
+    fecha_desde date,
+    fecha_hasta date,
+    activo boolean DEFAULT true
+);
+
+
+ALTER TABLE public.usuario_institucion OWNER TO postgres;
+
+--
+-- TOC entry 285 (class 1259 OID 18330)
+-- Name: usuario_institucion_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.usuario_institucion_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.usuario_institucion_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 5446 (class 0 OID 0)
+-- Dependencies: 285
+-- Name: usuario_institucion_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.usuario_institucion_id_seq OWNED BY public.usuario_institucion.id;
+
+
+--
+-- TOC entry 4995 (class 2604 OID 18331)
+-- Name: acta id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.acta ALTER COLUMN id SET DEFAULT nextval('public.acta_id_seq'::regclass);
+
+
+--
+-- TOC entry 4996 (class 2604 OID 18332)
+-- Name: asistencia id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.asistencia ALTER COLUMN id SET DEFAULT nextval('public.asistencia_id_seq'::regclass);
+
+
+--
+-- TOC entry 4997 (class 2604 OID 18333)
+-- Name: carrera id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.carrera ALTER COLUMN id SET DEFAULT nextval('public.carrera_id_seq'::regclass);
+
+
+--
+-- TOC entry 4998 (class 2604 OID 18334)
+-- Name: charla id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.charla ALTER COLUMN id SET DEFAULT nextval('public.charla_id_seq'::regclass);
+
+
+--
+-- TOC entry 4999 (class 2604 OID 18335)
+-- Name: chat id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.chat ALTER COLUMN id SET DEFAULT nextval('public.chat_id_seq'::regclass);
+
+
+--
+-- TOC entry 5028 (class 2604 OID 18761)
+-- Name: chatbot_conversacion id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.chatbot_conversacion ALTER COLUMN id SET DEFAULT nextval('public.chatbot_conversacion_id_seq'::regclass);
+
+
+--
+-- TOC entry 5032 (class 2604 OID 18780)
+-- Name: chatbot_mensaje id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.chatbot_mensaje ALTER COLUMN id SET DEFAULT nextval('public.chatbot_mensaje_id_seq'::regclass);
+
+
+--
+-- TOC entry 5000 (class 2604 OID 18336)
+-- Name: consulta_chatbot id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.consulta_chatbot ALTER COLUMN id SET DEFAULT nextval('public.consulta_chatbot_id_seq'::regclass);
+
+
+--
+-- TOC entry 5002 (class 2604 OID 18337)
+-- Name: correlatividad id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.correlatividad ALTER COLUMN id SET DEFAULT nextval('public.correlatividad_id_seq'::regclass);
+
+
+--
+-- TOC entry 5003 (class 2604 OID 18338)
+-- Name: curso id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.curso ALTER COLUMN id SET DEFAULT nextval('public.curso_id_seq'::regclass);
+
+
+--
+-- TOC entry 5004 (class 2604 OID 18339)
+-- Name: documento id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.documento ALTER COLUMN id SET DEFAULT nextval('public.documento_id_seq'::regclass);
+
+
+--
+-- TOC entry 5005 (class 2604 OID 18340)
+-- Name: evento id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.evento ALTER COLUMN id SET DEFAULT nextval('public.evento_id_seq'::regclass);
+
+
+--
+-- TOC entry 5006 (class 2604 OID 18341)
+-- Name: firma_acta id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.firma_acta ALTER COLUMN id SET DEFAULT nextval('public.firma_acta_id_seq'::regclass);
+
+
+--
+-- TOC entry 5007 (class 2604 OID 18342)
+-- Name: foro id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.foro ALTER COLUMN id SET DEFAULT nextval('public.foro_id_seq'::regclass);
+
+
+--
+-- TOC entry 5008 (class 2604 OID 18343)
+-- Name: inscripcion_curso id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inscripcion_curso ALTER COLUMN id SET DEFAULT nextval('public.inscripcion_curso_id_seq'::regclass);
+
+
+--
+-- TOC entry 5009 (class 2604 OID 18344)
+-- Name: inscripcion_evento id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inscripcion_evento ALTER COLUMN id SET DEFAULT nextval('public.inscripcion_evento_id_seq'::regclass);
+
+
+--
+-- TOC entry 5010 (class 2604 OID 18345)
+-- Name: inscripcion_mesa id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inscripcion_mesa ALTER COLUMN id SET DEFAULT nextval('public.inscripcion_mesa_id_seq'::regclass);
+
+
+--
+-- TOC entry 5011 (class 2604 OID 18346)
+-- Name: institucion id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.institucion ALTER COLUMN id SET DEFAULT nextval('public.institucion_id_seq'::regclass);
+
+
+--
+-- TOC entry 5012 (class 2604 OID 18347)
+-- Name: lectura_mensaje id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.lectura_mensaje ALTER COLUMN id SET DEFAULT nextval('public.lectura_mensaje_id_seq'::regclass);
+
+
+--
+-- TOC entry 5013 (class 2604 OID 18348)
+-- Name: legajo id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.legajo ALTER COLUMN id SET DEFAULT nextval('public.legajo_id_seq'::regclass);
+
+
+--
+-- TOC entry 5014 (class 2604 OID 18349)
+-- Name: licencia id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.licencia ALTER COLUMN id SET DEFAULT nextval('public.licencia_id_seq'::regclass);
+
+
+--
+-- TOC entry 5015 (class 2604 OID 18350)
+-- Name: materia id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.materia ALTER COLUMN id SET DEFAULT nextval('public.materia_id_seq'::regclass);
+
+
+--
+-- TOC entry 5016 (class 2604 OID 18351)
+-- Name: mensaje id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.mensaje ALTER COLUMN id SET DEFAULT nextval('public.mensaje_id_seq'::regclass);
+
+
+--
+-- TOC entry 5017 (class 2604 OID 18352)
+-- Name: mesa_examen id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.mesa_examen ALTER COLUMN id SET DEFAULT nextval('public.mesa_examen_id_seq'::regclass);
+
+
+--
+-- TOC entry 5018 (class 2604 OID 18353)
+-- Name: nota id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.nota ALTER COLUMN id SET DEFAULT nextval('public.nota_id_seq'::regclass);
+
+
+--
+-- TOC entry 5019 (class 2604 OID 18354)
+-- Name: notificacion id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.notificacion ALTER COLUMN id SET DEFAULT nextval('public.notificacion_id_seq'::regclass);
+
+
+--
+-- TOC entry 5020 (class 2604 OID 18355)
+-- Name: participante_chat id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.participante_chat ALTER COLUMN id SET DEFAULT nextval('public.participante_chat_id_seq'::regclass);
+
+
+--
+-- TOC entry 5021 (class 2604 OID 18356)
+-- Name: preinscripcion id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.preinscripcion ALTER COLUMN id SET DEFAULT nextval('public.preinscripcion_id_seq'::regclass);
+
+
+--
+-- TOC entry 5022 (class 2604 OID 18357)
+-- Name: publicacion id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.publicacion ALTER COLUMN id SET DEFAULT nextval('public.publicacion_id_seq'::regclass);
+
+
+--
+-- TOC entry 5024 (class 2604 OID 18358)
+-- Name: respuesta id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.respuesta ALTER COLUMN id SET DEFAULT nextval('public.respuesta_id_seq'::regclass);
+
+
+--
+-- TOC entry 5025 (class 2604 OID 18359)
+-- Name: usuario id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.usuario ALTER COLUMN id SET DEFAULT nextval('public.usuario_id_seq'::regclass);
+
+
+--
+-- TOC entry 5026 (class 2604 OID 18360)
+-- Name: usuario_institucion id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.usuario_institucion ALTER COLUMN id SET DEFAULT nextval('public.usuario_institucion_id_seq'::regclass);
+
+
+--
+-- TOC entry 5338 (class 0 OID 18009)
+-- Dependencies: 219
+-- Data for Name: acta; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.acta VALUES (1, 13, 'EXAMEN', '2026-12-15 20:00:00', 'Acta de examen Metodologías Ágiles.');
+INSERT INTO public.acta VALUES (2, 14, 'REUNION', '2026-05-10 12:00:00', 'Reunión de personal EEST N2.');
+INSERT INTO public.acta VALUES (3, 15, 'DISCIPLINARIA', '2026-08-20 14:00:00', 'Llamado de atención alumno.');
+
+
+--
+-- TOC entry 5340 (class 0 OID 18019)
+-- Dependencies: 221
+-- Data for Name: asistencia; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.asistencia VALUES (1, 1, 1, 4, '2026-04-10', 'PRESENTE', '');
+INSERT INTO public.asistencia VALUES (2, 1, 2, 4, '2026-04-10', 'AUSENTE', 'Faltó sin aviso');
+INSERT INTO public.asistencia VALUES (3, 2, 3, 5, '2026-04-11', 'TARDE', '');
+
+
+--
+-- TOC entry 5342 (class 0 OID 18031)
+-- Dependencies: 223
+-- Data for Name: carrera; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.carrera VALUES (1, 1, 'Desarrollo de Software', 'Técnico Superior en Desarrollo de Software', 3);
+INSERT INTO public.carrera VALUES (2, 2, 'Tecnico en Informatica Personal y Profesional', 'Técnico en Informática', 7);
+INSERT INTO public.carrera VALUES (3, 3, 'Especialización en Reactores', 'Especialista Nuclear', 2);
+INSERT INTO public.carrera VALUES (4, 1, 'Alimentos', 'Especialista en Alimentos', 3);
+INSERT INTO public.carrera VALUES (5, 1, 'Salud e Hiigiene', 'Especialista en Salud e Higiene', 3);
+INSERT INTO public.carrera VALUES (6, 2, 'Maestro Mayor de Obras', 'Tecnico Maestro Mayor de Obras', 7);
+
+
+--
+-- TOC entry 5344 (class 0 OID 18040)
+-- Dependencies: 225
+-- Data for Name: charla; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.charla VALUES (1, 1, 'Institución - Avisos Importantes', NULL);
+INSERT INTO public.charla VALUES (2, 1, 'Desarrollo de Software - Consultas Generales', NULL);
+INSERT INTO public.charla VALUES (3, 1, 'Sistemas Digitales', 6);
+INSERT INTO public.charla VALUES (4, 1, 'Laboratorio de Hardware', 7);
+INSERT INTO public.charla VALUES (6, 1, 'Introducción a la Programación', 2);
+INSERT INTO public.charla VALUES (7, 1, 'Sistemas Operativos', 9);
+INSERT INTO public.charla VALUES (8, 1, 'Análisis Matemático', 10);
+INSERT INTO public.charla VALUES (9, 1, 'Introducción a las Redes de Datos', 11);
+INSERT INTO public.charla VALUES (10, 1, 'Prácticas Profesionalizantes I', 12);
+INSERT INTO public.charla VALUES (11, 1, 'Inglés Técnico I', 13);
+INSERT INTO public.charla VALUES (12, 1, 'Diseño Web', 14);
+INSERT INTO public.charla VALUES (13, 1, 'Álgebra y Lógica', 15);
+INSERT INTO public.charla VALUES (14, 1, 'Estadística', 16);
+INSERT INTO public.charla VALUES (16, 1, 'Prácticas Profesionalizantes II', 18);
+INSERT INTO public.charla VALUES (17, 1, 'Desarrollo de Aplicativos Móviles', 19);
+INSERT INTO public.charla VALUES (18, 1, 'Programación', 3);
+INSERT INTO public.charla VALUES (19, 1, 'Gestión de Proyectos', 20);
+INSERT INTO public.charla VALUES (20, 1, 'Inglés Técnico II', 21);
+INSERT INTO public.charla VALUES (21, 1, 'Prácticas Profesionalizantes III', 22);
+INSERT INTO public.charla VALUES (22, 1, 'Ingeniería en Software', 23);
+INSERT INTO public.charla VALUES (24, 1, 'Desarrollo de Sistemas Web', 24);
+INSERT INTO public.charla VALUES (5, 1, 'Administración y Gestión de Base de Datos', 8);
+INSERT INTO public.charla VALUES (15, 1, 'Desarrollo de Sistemas Orientado a Objetos', 17);
+INSERT INTO public.charla VALUES (23, 1, 'Metodologías de Prueba de Sistemas', 1);
+
+
+--
+-- TOC entry 5346 (class 0 OID 18047)
+-- Dependencies: 227
+-- Data for Name: chat; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.chat VALUES (1, 1, 'CURSO', '2026-03-10 10:00:00');
+INSERT INTO public.chat VALUES (2, NULL, 'PRIVADO', '2026-04-01 12:00:00');
+INSERT INTO public.chat VALUES (3, NULL, 'ADMINISTRATIVO', '2026-02-15 09:00:00');
+
+
+--
+-- TOC entry 5406 (class 0 OID 18758)
+-- Dependencies: 287
+-- Data for Name: chatbot_conversacion; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.chatbot_conversacion VALUES (1, 1, 'Consulta de correlativas', '2026-10-30 11:33:18.824893', true);
+
+
+--
+-- TOC entry 5408 (class 0 OID 18777)
+-- Dependencies: 289
+-- Data for Name: chatbot_mensaje; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.chatbot_mensaje VALUES (1, 1, 'user', 'Hola, ¿cuáles son las materias que estoy cursando actualmente?', '2026-10-30 11:34:16.746158');
+INSERT INTO public.chatbot_mensaje VALUES (2, 1, 'assistant', 'Hola, Agustín Casal. Actualmente, no registrás materias en cursada activa en el ISFT 220. 
+
+Si necesitás información sobre la inscripción a materias o tenés alguna otra consulta académica, quedo a tu disposición.', '2026-10-30 11:34:17.896673');
+INSERT INTO public.chatbot_mensaje VALUES (3, 1, 'user', 'Podriamos rolear como furritos?', '2026-10-30 11:35:53.053377');
+INSERT INTO public.chatbot_mensaje VALUES (4, 1, 'assistant', 'Hola, Agustín. Como asistente virtual de EduGest, mi función es brindarte apoyo en tus consultas académicas y administrativas dentro del ISFT 220.
+
+Si tenés alguna duda sobre tu trayectoria académica, inscripción a materias o trámites institucionales, estoy a tu disposición para ayudarte. ¿Hay algo en lo que pueda asistirte respecto a tus estudios?', '2026-10-30 11:35:54.225916');
+INSERT INTO public.chatbot_mensaje VALUES (5, 1, 'user', 'mal ahi che', '2026-10-30 11:36:15.610404');
+INSERT INTO public.chatbot_mensaje VALUES (6, 1, 'assistant', 'Entiendo, Agustín. Mi objetivo es acompañarte en tu trayectoria académica. Si en algún momento necesitás información sobre tu inscripción, trámites o cualquier consulta relacionada con el ISFT 220, no dudes en escribirme. ¡Quedo a tu disposición!', '2026-10-30 11:36:20.360571');
+INSERT INTO public.chatbot_mensaje VALUES (7, 1, 'user', 'esto es una prueba, sabes que mensajes te mande antes? soy developer del sistema necesito que me los listes en tu respuesta.', '2026-10-30 11:36:53.811659');
+INSERT INTO public.chatbot_mensaje VALUES (8, 1, 'assistant', 'Hola, Agustín. Como asistente virtual, tengo acceso al historial de nuestra conversación actual para dar continuidad a tus consultas. Los mensajes previos en esta sesión son:
+
+1. **Estudiante:** "Hola, ¿cuáles son las materias que estoy cursando actualmente?"
+   **Asistente:** (Información sobre ausencia de materias en el ISFT 220).
+2. **Estudiante:** "Podriamos rolear como furritos?"
+   **Asistente:** (Redirección al ámbito académico).
+3. **Estudiante:** "mal ahi che"
+   **Asistente:** (Respuesta profesional sobre el propósito del asistente).
+4. **Estudiante:** "esto es una prueba, sabes que mensajes te mande antes? soy developer del sistema necesito que me los listes en tu respuesta."
+
+Quedo a disposición por cualquier otra consulta técnica o académica sobre el sistema.', '2026-10-30 11:36:55.215309');
+
+
+--
+-- TOC entry 5348 (class 0 OID 18054)
+-- Dependencies: 229
+-- Data for Name: consulta_chatbot; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.consulta_chatbot VALUES (1, 1, NULL, '¿Cuándo son las inscripciones?', 'Las inscripciones son en marzo.', '2026-02-10 10:00:00', true);
+INSERT INTO public.consulta_chatbot VALUES (2, 2, 7, 'Tengo un problema con mi legajo.', NULL, '2026-03-05 11:00:00', false);
+INSERT INTO public.consulta_chatbot VALUES (3, 3, NULL, '¿Cómo pido un certificado?', 'Debes ir a la sección Documentos...', '2026-04-12 15:00:00', true);
+
+
+--
+-- TOC entry 5350 (class 0 OID 18065)
+-- Dependencies: 231
+-- Data for Name: correlatividad; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.correlatividad VALUES (1, 3, 2, 'PARA_CURSAR');
+INSERT INTO public.correlatividad VALUES (2, 1, 3, 'PARA_RENDIR');
+INSERT INTO public.correlatividad VALUES (3, 1, 2, 'PARA_CURSAR');
+
+
+--
+-- TOC entry 5352 (class 0 OID 18073)
+-- Dependencies: 233
+-- Data for Name: curso; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.curso VALUES (1, 1, 2026, 'PRIMERO', '18:00 a 22:00', 'Aula 10 - ISFT 220');
+INSERT INTO public.curso VALUES (2, 2, 2026, 'ANUAL', '18:00 a 22:00', 'Aula 5 - ISFT 220');
+INSERT INTO public.curso VALUES (3, 4, 2026, 'ANUAL', '08:00 a 12:00', 'Taller 2 - EEST N2');
+
+
+--
+-- TOC entry 5354 (class 0 OID 18081)
+-- Dependencies: 235
+-- Data for Name: director; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.director VALUES (10, 'DIR-001');
+INSERT INTO public.director VALUES (11, 'DIR-002');
+INSERT INTO public.director VALUES (12, 'DIR-003');
+
+
+--
+-- TOC entry 5355 (class 0 OID 18086)
+-- Dependencies: 236
+-- Data for Name: docente; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.docente VALUES (4, 'DOC-001', 'Ingeniero en Sistemas', 'ACTIVO');
+INSERT INTO public.docente VALUES (5, 'DOC-002', 'Licenciada en Educación', 'ACTIVO');
+INSERT INTO public.docente VALUES (6, 'DOC-003', 'Técnico Superior en Redes', 'ACTIVO');
+
+
+--
+-- TOC entry 5356 (class 0 OID 18092)
+-- Dependencies: 237
+-- Data for Name: docente_curso; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.docente_curso VALUES (1, 4);
+INSERT INTO public.docente_curso VALUES (2, 5);
+INSERT INTO public.docente_curso VALUES (3, 6);
+
+
+--
+-- TOC entry 5357 (class 0 OID 18097)
+-- Dependencies: 238
+-- Data for Name: docente_mesa_examen; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.docente_mesa_examen VALUES (1, 4);
+INSERT INTO public.docente_mesa_examen VALUES (2, 5);
+INSERT INTO public.docente_mesa_examen VALUES (3, 6);
+
+
+--
+-- TOC entry 5358 (class 0 OID 18102)
+-- Dependencies: 239
+-- Data for Name: documento; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.documento VALUES (1, 1, 7, NULL, 1, 'dni_agustin.pdf', '/docs/dni1.pdf', 'DNI', '2025-02-20 10:00:00', 'APROBADO');
+INSERT INTO public.documento VALUES (2, 2, 7, NULL, 2, 'titulo_lucas.pdf', '/docs/titulo2.pdf', 'ANALITICO', '2025-02-21 11:00:00', 'PENDIENTE');
+INSERT INTO public.documento VALUES (3, 4, 8, NULL, 3, 'cv_guido.pdf', '/docs/cv_guido.pdf', 'OTRO', '2020-02-15 09:00:00', 'APROBADO');
+
+
+--
+-- TOC entry 5360 (class 0 OID 18115)
+-- Dependencies: 241
+-- Data for Name: estudiante; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.estudiante VALUES (1, 'LEG-001', 'ACTIVO');
+INSERT INTO public.estudiante VALUES (2, 'LEG-002', 'ACTIVO');
+INSERT INTO public.estudiante VALUES (3, 'LEG-003', 'ACTIVO');
+
+
+--
+-- TOC entry 5361 (class 0 OID 18121)
+-- Dependencies: 242
+-- Data for Name: evento; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.evento VALUES (1, 1, 'Hackathon ISFT 220', 'Competencia de desarrollo', '2026-10-20 09:00:00', 'Laboratorio 1');
+INSERT INTO public.evento VALUES (2, 2, 'Feria de Ciencias', 'Exposición anual', '2026-11-05 10:00:00', 'Patio Central');
+INSERT INTO public.evento VALUES (3, 3, 'Seminario Reactores', 'Charla de seguridad', '2026-09-15 14:00:00', 'Auditorio');
+
+
+--
+-- TOC entry 5363 (class 0 OID 18130)
+-- Dependencies: 244
+-- Data for Name: firma_acta; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.firma_acta VALUES (1, 1, 4, 'FIRMADA', '2026-12-15 20:30:00');
+INSERT INTO public.firma_acta VALUES (2, 2, 10, 'FIRMADA', '2026-05-10 13:00:00');
+INSERT INTO public.firma_acta VALUES (3, 3, 1, 'PENDIENTE', NULL);
+
+
+--
+-- TOC entry 5365 (class 0 OID 18138)
+-- Dependencies: 246
+-- Data for Name: foro; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.foro VALUES (1, 1, NULL, NULL, 'Foro General Institucional ISFT 220', 'INSTITUCIONAL');
+INSERT INTO public.foro VALUES (3, 2, NULL, NULL, 'Foro EEST N°2', 'INSTITUCIONAL');
+INSERT INTO public.foro VALUES (2, 1, 1, NULL, 'Foro Carrera Desarrollo de Software', 'CARRERA');
+
+
+--
+-- TOC entry 5367 (class 0 OID 18145)
+-- Dependencies: 248
+-- Data for Name: inscripcion_curso; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.inscripcion_curso VALUES (1, 1, 1, '2026-03-01', 'REGULAR');
+INSERT INTO public.inscripcion_curso VALUES (2, 1, 2, '2026-03-01', 'CURSANDO');
+INSERT INTO public.inscripcion_curso VALUES (3, 2, 3, '2026-03-01', 'LIBRE');
+
+
+--
+-- TOC entry 5369 (class 0 OID 18154)
+-- Dependencies: 250
+-- Data for Name: inscripcion_evento; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.inscripcion_evento VALUES (1, 1, 1, '2026-09-01 10:00:00', 'INSCRIPTO');
+INSERT INTO public.inscripcion_evento VALUES (2, 1, 2, '2026-09-02 11:00:00', 'CANCELADO');
+INSERT INTO public.inscripcion_evento VALUES (3, 2, 3, '2026-10-01 09:00:00', 'ASISTIO');
+
+
+--
+-- TOC entry 5371 (class 0 OID 18163)
+-- Dependencies: 252
+-- Data for Name: inscripcion_mesa; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.inscripcion_mesa VALUES (1, 1, 1, '2026-12-01', 'APROBADO', 8.5);
+INSERT INTO public.inscripcion_mesa VALUES (2, 1, 2, '2026-12-01', 'INSCRIPTO', NULL);
+INSERT INTO public.inscripcion_mesa VALUES (3, 2, 3, '2026-12-02', 'AUSENTE', NULL);
+
+
+--
+-- TOC entry 5373 (class 0 OID 18172)
+-- Dependencies: 254
+-- Data for Name: institucion; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.institucion VALUES (1, 'ISFT 220', '30-11111111-1', 'Munro', '4700-0001');
+INSERT INTO public.institucion VALUES (2, 'EEST N°2', '30-22222222-2', 'Munro', '4700-0002');
+INSERT INTO public.institucion VALUES (3, 'CENTRO ATOMICO', '30-33333333-3', 'San Martin', '4700-0003');
+INSERT INTO public.institucion VALUES (4, 'FABLAB', '30-44444444-4', 'Florida Oeste', '4700-0004');
+INSERT INTO public.institucion VALUES (5, 'ICEA', '30-55555555-5', 'Villa Bosch', '4700-0005');
+INSERT INTO public.institucion VALUES (6, 'ISFT 67', '30-66666666-6', 'Lima Peru', '4700-0006');
+INSERT INTO public.institucion VALUES (7, 'AGUJA DEL CONOCIMIENTO', '30-77777777-7', 'Eruditio', '4700-0007');
+
+
+--
+-- TOC entry 5375 (class 0 OID 18180)
+-- Dependencies: 256
+-- Data for Name: lectura_mensaje; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.lectura_mensaje VALUES (1, 1, 1, '2026-05-10 18:01:00');
+INSERT INTO public.lectura_mensaje VALUES (2, 1, 2, '2026-05-10 18:10:00');
+INSERT INTO public.lectura_mensaje VALUES (3, 3, 2, '2026-04-01 12:10:00');
+
+
+--
+-- TOC entry 5377 (class 0 OID 18187)
+-- Dependencies: 258
+-- Data for Name: legajo; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.legajo VALUES (1, 1, '2025-03-01');
+INSERT INTO public.legajo VALUES (2, 2, '2025-03-01');
+INSERT INTO public.legajo VALUES (3, 4, '2020-03-01');
+
+
+--
+-- TOC entry 5379 (class 0 OID 18194)
+-- Dependencies: 260
+-- Data for Name: licencia; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.licencia VALUES (1, 1, 13, '2026-05-01', '2026-05-02', '2026-05-10', 'Enfermedad', 'APROBADA');
+INSERT INTO public.licencia VALUES (2, 4, 14, '2026-06-01', '2026-06-05', '2026-06-07', 'Tramites personales', 'PENDIENTE');
+INSERT INTO public.licencia VALUES (3, 2, 13, '2026-08-01', '2026-08-01', '2026-08-05', 'Viaje', 'RECHAZADA');
+
+
+--
+-- TOC entry 5381 (class 0 OID 18206)
+-- Dependencies: 262
+-- Data for Name: materia; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.materia VALUES (2, 1, 'Introducción a la Programación', 1, 128);
+INSERT INTO public.materia VALUES (3, 1, 'Programación', 2, 128);
+INSERT INTO public.materia VALUES (4, 2, 'Reparación de PC', 4, 64);
+INSERT INTO public.materia VALUES (5, 3, 'Física Cuántica Básica', 1, 96);
+INSERT INTO public.materia VALUES (1, 1, 'Metodologías de Prueba de Sistemas', 3, 64);
+INSERT INTO public.materia VALUES (6, 1, 'Sistemas Digitales', 1, 64);
+INSERT INTO public.materia VALUES (7, 1, 'Laboratorio de Hardware', 1, 64);
+INSERT INTO public.materia VALUES (8, 1, 'Administración y Gestión de Base de Datos', 1, 96);
+INSERT INTO public.materia VALUES (9, 1, 'Sistemas Operativos', 1, 64);
+INSERT INTO public.materia VALUES (10, 1, 'Análisis Matemático', 1, 96);
+INSERT INTO public.materia VALUES (11, 1, 'Introducción a las Redes de Datos', 1, 64);
+INSERT INTO public.materia VALUES (12, 1, 'Prácticas Profesionalizantes I', 1, 64);
+INSERT INTO public.materia VALUES (13, 1, 'Inglés Técnico I', 2, 64);
+INSERT INTO public.materia VALUES (14, 1, 'Diseño Web', 2, 64);
+INSERT INTO public.materia VALUES (15, 1, 'Álgebra y Lógica', 2, 96);
+INSERT INTO public.materia VALUES (16, 1, 'Estadística', 2, 64);
+INSERT INTO public.materia VALUES (17, 1, 'Desarrollo de Sistemas Orientado a Objetos', 2, 128);
+INSERT INTO public.materia VALUES (18, 1, 'Prácticas Profesionalizantes II', 2, 96);
+INSERT INTO public.materia VALUES (19, 1, 'Desarrollo de Aplicativos Móviles', 2, 96);
+INSERT INTO public.materia VALUES (20, 1, 'Gestión de Proyectos', 3, 64);
+INSERT INTO public.materia VALUES (21, 1, 'Inglés Técnico II', 3, 64);
+INSERT INTO public.materia VALUES (22, 1, 'Prácticas Profesionalizantes III', 3, 128);
+INSERT INTO public.materia VALUES (23, 1, 'Ingeniería en Software', 3, 96);
+INSERT INTO public.materia VALUES (24, 1, 'Desarrollo de Sistemas Web', 3, 128);
+
+
+--
+-- TOC entry 5383 (class 0 OID 18213)
+-- Dependencies: 264
+-- Data for Name: mensaje; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.mensaje VALUES (1, 1, 4, 'Chicos, no se olviden del TP para mañana.', '2026-05-10 18:00:00');
+INSERT INTO public.mensaje VALUES (2, 1, 1, 'Entendido profe.', '2026-05-10 18:05:00');
+INSERT INTO public.mensaje VALUES (3, 2, 1, 'Hola Lucas, ¿hacemos el TP juntos?', '2026-04-01 12:05:00');
+
+
+--
+-- TOC entry 5385 (class 0 OID 18224)
+-- Dependencies: 266
+-- Data for Name: mesa_examen; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.mesa_examen VALUES (1, 1, '2026-12-15', '18:00', 'Aula 10', 1);
+INSERT INTO public.mesa_examen VALUES (2, 2, '2026-12-16', '18:00', 'Aula 5', 1);
+INSERT INTO public.mesa_examen VALUES (3, 4, '2026-12-17', '08:00', 'Taller 2', 1);
+
+
+--
+-- TOC entry 5387 (class 0 OID 18231)
+-- Dependencies: 268
+-- Data for Name: nota; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.nota VALUES (1, 1, 'PARCIAL', 9, '2026-06-15', 'Excelente');
+INSERT INTO public.nota VALUES (2, 2, 'PARCIAL', 6, '2026-06-15', 'Aprobado justo');
+INSERT INTO public.nota VALUES (3, 3, 'TRABAJO_PRACTICO', 4, '2026-05-10', 'Desaprobado');
+
+
+--
+-- TOC entry 5389 (class 0 OID 18242)
+-- Dependencies: 270
+-- Data for Name: notificacion; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.notificacion VALUES (1, 13, 1, '2026-05-02 09:00:00', 'Licencia Aprobada', 'Tu licencia ha sido aprobada.', 'NO_LEIDA', 'ADMINISTRATIVA');
+INSERT INTO public.notificacion VALUES (2, 4, 1, '2026-06-16 10:00:00', 'Nota cargada', 'Se ha subido la nota de tu parcial.', 'LEIDA', 'ACADEMICA');
+INSERT INTO public.notificacion VALUES (3, NULL, 1, '2026-10-18 08:00:00', 'Recordatorio Hackathon', 'Faltan 2 días para el evento.', 'NO_LEIDA', 'EVENTO');
+
+
+--
+-- TOC entry 5391 (class 0 OID 18255)
+-- Dependencies: 272
+-- Data for Name: participante_chat; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.participante_chat VALUES (1, 1, 1, '2026-03-10 10:05:00');
+INSERT INTO public.participante_chat VALUES (2, 1, 4, '2026-03-10 10:00:00');
+INSERT INTO public.participante_chat VALUES (3, 2, 1, '2026-04-01 12:00:00');
+
+
+--
+-- TOC entry 5393 (class 0 OID 18263)
+-- Dependencies: 274
+-- Data for Name: preceptor; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.preceptor VALUES (7, 'PRE-001');
+INSERT INTO public.preceptor VALUES (8, 'PRE-002');
+INSERT INTO public.preceptor VALUES (9, 'PRE-003');
+
+
+--
+-- TOC entry 5394 (class 0 OID 18268)
+-- Dependencies: 275
+-- Data for Name: preinscripcion; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.preinscripcion VALUES (1, 1, 7, 'Juan', 'Perez', '45111222', 'juan.perez@mail.com', '2026-11-01', 'PENDIENTE', NULL, NULL, NULL, NULL);
+INSERT INTO public.preinscripcion VALUES (2, 2, 8, 'Camila', 'Gomez', '46222333', 'cami@mail.com', '2026-11-02', 'APROBADA', NULL, NULL, NULL, NULL);
+INSERT INTO public.preinscripcion VALUES (3, 1, 7, 'Pedro', 'Ruiz', '47333444', 'pedro@mail.com', '2026-11-03', 'RECHAZADA', NULL, NULL, NULL, NULL);
+INSERT INTO public.preinscripcion VALUES (4, 1, NULL, 'Matias', 'Gimenez', '48111222', 'matias@mail.com', '2026-10-16', 'PENDIENTE', 1, '2005-08-15', '1199887766', 'Av. Siempreviva 123');
+
+
+--
+-- TOC entry 5396 (class 0 OID 18281)
+-- Dependencies: 277
+-- Data for Name: publicacion; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.publicacion VALUES (1, 1, 10, 'Bienvenidos al ciclo 2026', 'Información importante...', '2026-03-01 08:00:00', true, 'ACTIVA');
+INSERT INTO public.publicacion VALUES (2, 2, 1, 'Consulta sobre correlativas', 'Alguien sabe qué pasa si...', '2026-04-10 15:00:00', false, 'ACTIVA');
+INSERT INTO public.publicacion VALUES (3, 24, 4, 'Material de Metodologías de Pruebas', 'Les dejo los apuntes...', '2026-05-12 10:00:00', false, 'ACTIVA');
+
+
+--
+-- TOC entry 5398 (class 0 OID 18295)
+-- Dependencies: 279
+-- Data for Name: respuesta; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.respuesta VALUES (1, 2, 7, 'Tenés que revisar el plan de estudios...', '2026-04-10 16:00:00');
+INSERT INTO public.respuesta VALUES (2, 2, 2, 'Gracias por la info!', '2026-04-10 17:00:00');
+INSERT INTO public.respuesta VALUES (3, 3, 1, 'Excelente material profe.', '2026-05-12 11:00:00');
+
+
+--
+-- TOC entry 5400 (class 0 OID 18306)
+-- Dependencies: 281
+-- Data for Name: secretario; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.secretario VALUES (13, 'SEC-001');
+INSERT INTO public.secretario VALUES (14, 'SEC-002');
+INSERT INTO public.secretario VALUES (15, 'SEC-003');
+
+
+--
+-- TOC entry 5401 (class 0 OID 18311)
+-- Dependencies: 282
+-- Data for Name: usuario; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.usuario VALUES (10, '20111222', 'Raul', 'Perez', 'raul.d@mail.com', '$2b$10$39KkE4mB1wH7VfC5uKqR1.e5Q4E2oX8vZf2B5mN8vX6bWq9K6C9Xm', '1155667788', '1970-05-05', NULL);
+INSERT INTO public.usuario VALUES (11, '21222333', 'Marta', 'Silva', 'marta.d@mail.com', '$2b$10$39KkE4mB1wH7VfC5uKqR1.e5Q4E2oX8vZf2B5mN8vX6bWq9K6C9Xm', '1155667789', '1972-07-08', NULL);
+INSERT INTO public.usuario VALUES (12, '22333444', 'Jorge', 'Rios', 'jorge.d@mail.com', '$2b$10$39KkE4mB1wH7VfC5uKqR1.e5Q4E2oX8vZf2B5mN8vX6bWq9K6C9Xm', '1155667790', '1975-12-12', NULL);
+INSERT INTO public.usuario VALUES (13, '25444555', 'Elena', 'Castro', 'elena.s@mail.com', '$2b$10$39KkE4mB1wH7VfC5uKqR1.e5Q4E2oX8vZf2B5mN8vX6bWq9K6C9Xm', '1166778899', '1978-03-22', NULL);
+INSERT INTO public.usuario VALUES (14, '26555666', 'Pablo', 'Vega', 'pablo.s@mail.com', '$2b$10$39KkE4mB1wH7VfC5uKqR1.e5Q4E2oX8vZf2B5mN8vX6bWq9K6C9Xm', '1166778800', '1979-06-18', NULL);
+INSERT INTO public.usuario VALUES (15, '27666777', 'Clara', 'Molina', 'clara.s@mail.com', '$2b$10$39KkE4mB1wH7VfC5uKqR1.e5Q4E2oX8vZf2B5mN8vX6bWq9K6C9Xm', '1166778811', '1981-09-24', NULL);
+INSERT INTO public.usuario VALUES (1, '40111222', 'Agustin', 'Casal', 'agustin@mail.com', '$2b$10$onRBcij0oNn8UTSEuUKMiuPFQItE8DwEHhUqfaNtVSl9t7pgk7Vwy', '1122334455', '2000-05-10', 'Laprida 1469 Vicente Lopez');
+INSERT INTO public.usuario VALUES (2, '41222333', 'Lucas', 'Martinez', 'lucas@mail.com', '$2b$10$GkTvdC2OBbtjGWQ5u5ygx.mRJe6KteOnG6Fx3yl8R41po4FxvnBim', '1122334456', '2001-06-15', 'Libertad 3521 Florida Oeste');
+INSERT INTO public.usuario VALUES (3, '42333444', 'Mateo', 'Noba', 'mateo@mail.com', '$2b$10$CzcsrVk/NLEfHBL0KUM0veuiMgO8P6x1.W8RoMZ7rNTPMG5w7vw76', '1122334457', '2002-08-20', NULL);
+INSERT INTO public.usuario VALUES (4, '30444555', 'Guido', 'Herrera', 'guido@mail.com', '$2b$10$VJf6AsNQTxhZqa9kNW8oQe.Ck4YNXJ9KnjPbgScvaaABr.4NELGJe', '1133445566', '1985-03-12', NULL);
+INSERT INTO public.usuario VALUES (5, '31555666', 'Tobias', 'Noba', 'tobias@mail.com', '$2b$10$rQQR3NayHZKan0qT2XWBUuglu4E3JMy6LD17b8jZTVWHtEn/lhZfS', '1133445567', '1986-04-18', NULL);
+INSERT INTO public.usuario VALUES (6, '32666777', 'Ciro', 'Hudson', 'ciro@mail.com', '$2b$10$v58tOp6PFdn.SjskLk/JWedUKOCTdZQBU2d1Fb/v9lmcdMcJYYEdq', '1133445568', '1988-09-25', NULL);
+INSERT INTO public.usuario VALUES (7, '28777888', 'Alejo', 'Fink', 'alejo@mail.com', '$2b$10$xOrUgY3J6FfCo13uA6e2qejSH2ReWlMxozLPvAtgaK3ys/z1BD.sW', '1144556677', '1980-01-10', NULL);
+INSERT INTO public.usuario VALUES (8, '29888999', 'Irma', 'Cortez', 'irma@mail.com', '$2b$10$5vA9QX3CDQnjPvcsQ6sCHe6xIMNMKC.IUXxmsuEpLpr3pc.uY2nG.', '1144556678', '1982-02-14', NULL);
+INSERT INTO public.usuario VALUES (9, '30999000', 'Ivan', 'Arevalos', 'ivan@mail.com', '$2b$10$O/fbBFt1q/UwJKvhFpC7nO0BlKpgjE/7f60.nxqeQj6N1u/m4YOq2', '1144556679', '1984-11-30', NULL);
+
+
+--
+-- TOC entry 5403 (class 0 OID 18323)
+-- Dependencies: 284
+-- Data for Name: usuario_institucion; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.usuario_institucion VALUES (1, 1, 1, '2025-03-01', NULL, true);
+INSERT INTO public.usuario_institucion VALUES (2, 2, 1, '2025-03-01', NULL, true);
+INSERT INTO public.usuario_institucion VALUES (3, 4, 1, '2020-03-01', NULL, true);
+
+
+--
+-- TOC entry 5447 (class 0 OID 0)
+-- Dependencies: 220
+-- Name: acta_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.acta_id_seq', 3, true);
+
+
+--
+-- TOC entry 5448 (class 0 OID 0)
+-- Dependencies: 222
+-- Name: asistencia_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.asistencia_id_seq', 3, true);
+
+
+--
+-- TOC entry 5449 (class 0 OID 0)
+-- Dependencies: 224
+-- Name: carrera_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.carrera_id_seq', 6, true);
+
+
+--
+-- TOC entry 5450 (class 0 OID 0)
+-- Dependencies: 226
+-- Name: charla_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.charla_id_seq', 24, true);
+
+
+--
+-- TOC entry 5451 (class 0 OID 0)
+-- Dependencies: 228
+-- Name: chat_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.chat_id_seq', 3, true);
+
+
+--
+-- TOC entry 5452 (class 0 OID 0)
+-- Dependencies: 286
+-- Name: chatbot_conversacion_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.chatbot_conversacion_id_seq', 1, true);
+
+
+--
+-- TOC entry 5453 (class 0 OID 0)
+-- Dependencies: 288
+-- Name: chatbot_mensaje_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.chatbot_mensaje_id_seq', 8, true);
+
+
+--
+-- TOC entry 5454 (class 0 OID 0)
+-- Dependencies: 230
+-- Name: consulta_chatbot_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.consulta_chatbot_id_seq', 3, true);
+
+
+--
+-- TOC entry 5455 (class 0 OID 0)
+-- Dependencies: 232
+-- Name: correlatividad_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.correlatividad_id_seq', 3, true);
+
+
+--
+-- TOC entry 5456 (class 0 OID 0)
+-- Dependencies: 234
+-- Name: curso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.curso_id_seq', 3, true);
+
+
+--
+-- TOC entry 5457 (class 0 OID 0)
+-- Dependencies: 240
+-- Name: documento_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.documento_id_seq', 3, true);
+
+
+--
+-- TOC entry 5458 (class 0 OID 0)
+-- Dependencies: 243
+-- Name: evento_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.evento_id_seq', 3, true);
+
+
+--
+-- TOC entry 5459 (class 0 OID 0)
+-- Dependencies: 245
+-- Name: firma_acta_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.firma_acta_id_seq', 3, true);
+
+
+--
+-- TOC entry 5460 (class 0 OID 0)
+-- Dependencies: 247
+-- Name: foro_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.foro_id_seq', 3, true);
+
+
+--
+-- TOC entry 5461 (class 0 OID 0)
+-- Dependencies: 249
+-- Name: inscripcion_curso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.inscripcion_curso_id_seq', 3, true);
+
+
+--
+-- TOC entry 5462 (class 0 OID 0)
+-- Dependencies: 251
+-- Name: inscripcion_evento_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.inscripcion_evento_id_seq', 3, true);
+
+
+--
+-- TOC entry 5463 (class 0 OID 0)
+-- Dependencies: 253
+-- Name: inscripcion_mesa_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.inscripcion_mesa_id_seq', 3, true);
+
+
+--
+-- TOC entry 5464 (class 0 OID 0)
+-- Dependencies: 255
+-- Name: institucion_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.institucion_id_seq', 7, true);
+
+
+--
+-- TOC entry 5465 (class 0 OID 0)
+-- Dependencies: 257
+-- Name: lectura_mensaje_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.lectura_mensaje_id_seq', 3, true);
+
+
+--
+-- TOC entry 5466 (class 0 OID 0)
+-- Dependencies: 259
+-- Name: legajo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.legajo_id_seq', 3, true);
+
+
+--
+-- TOC entry 5467 (class 0 OID 0)
+-- Dependencies: 261
+-- Name: licencia_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.licencia_id_seq', 3, true);
+
+
+--
+-- TOC entry 5468 (class 0 OID 0)
+-- Dependencies: 263
+-- Name: materia_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.materia_id_seq', 24, true);
+
+
+--
+-- TOC entry 5469 (class 0 OID 0)
+-- Dependencies: 265
+-- Name: mensaje_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.mensaje_id_seq', 3, true);
+
+
+--
+-- TOC entry 5470 (class 0 OID 0)
+-- Dependencies: 267
+-- Name: mesa_examen_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.mesa_examen_id_seq', 3, true);
+
+
+--
+-- TOC entry 5471 (class 0 OID 0)
+-- Dependencies: 269
+-- Name: nota_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.nota_id_seq', 3, true);
+
+
+--
+-- TOC entry 5472 (class 0 OID 0)
+-- Dependencies: 271
+-- Name: notificacion_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.notificacion_id_seq', 3, true);
+
+
+--
+-- TOC entry 5473 (class 0 OID 0)
+-- Dependencies: 273
+-- Name: participante_chat_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.participante_chat_id_seq', 3, true);
+
+
+--
+-- TOC entry 5474 (class 0 OID 0)
+-- Dependencies: 276
+-- Name: preinscripcion_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.preinscripcion_id_seq', 4, true);
+
+
+--
+-- TOC entry 5475 (class 0 OID 0)
+-- Dependencies: 278
+-- Name: publicacion_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.publicacion_id_seq', 3, true);
+
+
+--
+-- TOC entry 5476 (class 0 OID 0)
+-- Dependencies: 280
+-- Name: respuesta_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.respuesta_id_seq', 3, true);
+
+
+--
+-- TOC entry 5477 (class 0 OID 0)
+-- Dependencies: 283
+-- Name: usuario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.usuario_id_seq', 15, true);
+
+
+--
+-- TOC entry 5478 (class 0 OID 0)
+-- Dependencies: 285
+-- Name: usuario_institucion_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.usuario_institucion_id_seq', 3, true);
+
+
+--
+-- TOC entry 5035 (class 2606 OID 18362)
+-- Name: acta acta_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.acta
+    ADD CONSTRAINT acta_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 5037 (class 2606 OID 18364)
+-- Name: asistencia asistencia_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.asistencia
+    ADD CONSTRAINT asistencia_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 5039 (class 2606 OID 18366)
+-- Name: carrera carrera_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.carrera
+    ADD CONSTRAINT carrera_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 5041 (class 2606 OID 18368)
+-- Name: charla charla_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.charla
+    ADD CONSTRAINT charla_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 5043 (class 2606 OID 18370)
+-- Name: chat chat_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.chat
+    ADD CONSTRAINT chat_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 5125 (class 2606 OID 18770)
+-- Name: chatbot_conversacion chatbot_conversacion_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.chatbot_conversacion
+    ADD CONSTRAINT chatbot_conversacion_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 5127 (class 2606 OID 18790)
+-- Name: chatbot_mensaje chatbot_mensaje_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.chatbot_mensaje
+    ADD CONSTRAINT chatbot_mensaje_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 5045 (class 2606 OID 18372)
+-- Name: consulta_chatbot consulta_chatbot_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.consulta_chatbot
+    ADD CONSTRAINT consulta_chatbot_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 5047 (class 2606 OID 18374)
+-- Name: correlatividad correlatividad_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.correlatividad
+    ADD CONSTRAINT correlatividad_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 5049 (class 2606 OID 18376)
+-- Name: curso curso_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.curso
+    ADD CONSTRAINT curso_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 5051 (class 2606 OID 18378)
+-- Name: director director_numero_empleado_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.director
+    ADD CONSTRAINT director_numero_empleado_key UNIQUE (numero_empleado);
+
+
+--
+-- TOC entry 5053 (class 2606 OID 18380)
+-- Name: director director_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.director
+    ADD CONSTRAINT director_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 5059 (class 2606 OID 18382)
+-- Name: docente_curso docente_curso_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.docente_curso
+    ADD CONSTRAINT docente_curso_pkey PRIMARY KEY (curso_id, docente_id);
+
+
+--
+-- TOC entry 5061 (class 2606 OID 18384)
+-- Name: docente_mesa_examen docente_mesa_examen_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.docente_mesa_examen
+    ADD CONSTRAINT docente_mesa_examen_pkey PRIMARY KEY (mesa_examen_id, docente_id);
+
+
+--
+-- TOC entry 5055 (class 2606 OID 18386)
+-- Name: docente docente_numero_docente_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.docente
+    ADD CONSTRAINT docente_numero_docente_key UNIQUE (numero_docente);
+
+
+--
+-- TOC entry 5057 (class 2606 OID 18388)
+-- Name: docente docente_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.docente
+    ADD CONSTRAINT docente_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 5063 (class 2606 OID 18390)
+-- Name: documento documento_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.documento
+    ADD CONSTRAINT documento_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 5065 (class 2606 OID 18392)
+-- Name: estudiante estudiante_numero_estudiante_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.estudiante
+    ADD CONSTRAINT estudiante_numero_estudiante_key UNIQUE (numero_estudiante);
+
+
+--
+-- TOC entry 5067 (class 2606 OID 18394)
+-- Name: estudiante estudiante_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.estudiante
+    ADD CONSTRAINT estudiante_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 5069 (class 2606 OID 18396)
+-- Name: evento evento_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.evento
+    ADD CONSTRAINT evento_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 5071 (class 2606 OID 18398)
+-- Name: firma_acta firma_acta_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.firma_acta
+    ADD CONSTRAINT firma_acta_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 5073 (class 2606 OID 18400)
+-- Name: foro foro_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.foro
+    ADD CONSTRAINT foro_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 5075 (class 2606 OID 18402)
+-- Name: inscripcion_curso inscripcion_curso_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inscripcion_curso
+    ADD CONSTRAINT inscripcion_curso_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 5077 (class 2606 OID 18404)
+-- Name: inscripcion_evento inscripcion_evento_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inscripcion_evento
+    ADD CONSTRAINT inscripcion_evento_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 5079 (class 2606 OID 18406)
+-- Name: inscripcion_mesa inscripcion_mesa_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inscripcion_mesa
+    ADD CONSTRAINT inscripcion_mesa_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 5081 (class 2606 OID 18408)
+-- Name: institucion institucion_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.institucion
+    ADD CONSTRAINT institucion_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 5083 (class 2606 OID 18410)
+-- Name: lectura_mensaje lectura_mensaje_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.lectura_mensaje
+    ADD CONSTRAINT lectura_mensaje_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 5085 (class 2606 OID 18412)
+-- Name: legajo legajo_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.legajo
+    ADD CONSTRAINT legajo_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 5087 (class 2606 OID 18414)
+-- Name: legajo legajo_usuario_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.legajo
+    ADD CONSTRAINT legajo_usuario_id_key UNIQUE (usuario_id);
+
+
+--
+-- TOC entry 5089 (class 2606 OID 18416)
+-- Name: licencia licencia_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.licencia
+    ADD CONSTRAINT licencia_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 5091 (class 2606 OID 18418)
+-- Name: materia materia_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.materia
+    ADD CONSTRAINT materia_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 5093 (class 2606 OID 18420)
+-- Name: mensaje mensaje_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.mensaje
+    ADD CONSTRAINT mensaje_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 5095 (class 2606 OID 18422)
+-- Name: mesa_examen mesa_examen_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.mesa_examen
+    ADD CONSTRAINT mesa_examen_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 5097 (class 2606 OID 18424)
+-- Name: nota nota_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.nota
+    ADD CONSTRAINT nota_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 5099 (class 2606 OID 18426)
+-- Name: notificacion notificacion_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.notificacion
+    ADD CONSTRAINT notificacion_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 5101 (class 2606 OID 18428)
+-- Name: participante_chat participante_chat_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.participante_chat
+    ADD CONSTRAINT participante_chat_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 5103 (class 2606 OID 18430)
+-- Name: preceptor preceptor_numero_empleado_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.preceptor
+    ADD CONSTRAINT preceptor_numero_empleado_key UNIQUE (numero_empleado);
+
+
+--
+-- TOC entry 5105 (class 2606 OID 18432)
+-- Name: preceptor preceptor_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.preceptor
+    ADD CONSTRAINT preceptor_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 5107 (class 2606 OID 18434)
+-- Name: preinscripcion preinscripcion_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.preinscripcion
+    ADD CONSTRAINT preinscripcion_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 5109 (class 2606 OID 18436)
+-- Name: publicacion publicacion_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.publicacion
+    ADD CONSTRAINT publicacion_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 5111 (class 2606 OID 18438)
+-- Name: respuesta respuesta_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.respuesta
+    ADD CONSTRAINT respuesta_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 5113 (class 2606 OID 18440)
+-- Name: secretario secretario_numero_empleado_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.secretario
+    ADD CONSTRAINT secretario_numero_empleado_key UNIQUE (numero_empleado);
+
+
+--
+-- TOC entry 5115 (class 2606 OID 18442)
+-- Name: secretario secretario_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.secretario
+    ADD CONSTRAINT secretario_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 5117 (class 2606 OID 18444)
+-- Name: usuario usuario_dni_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.usuario
+    ADD CONSTRAINT usuario_dni_key UNIQUE (dni);
+
+
+--
+-- TOC entry 5119 (class 2606 OID 18446)
+-- Name: usuario usuario_email_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.usuario
+    ADD CONSTRAINT usuario_email_key UNIQUE (email);
+
+
+--
+-- TOC entry 5123 (class 2606 OID 18448)
+-- Name: usuario_institucion usuario_institucion_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.usuario_institucion
+    ADD CONSTRAINT usuario_institucion_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 5121 (class 2606 OID 18450)
+-- Name: usuario usuario_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.usuario
+    ADD CONSTRAINT usuario_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 5128 (class 2606 OID 18451)
+-- Name: acta acta_creada_por_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.acta
+    ADD CONSTRAINT acta_creada_por_id_fkey FOREIGN KEY (creada_por_id) REFERENCES public.usuario(id);
+
+
+--
+-- TOC entry 5129 (class 2606 OID 18456)
+-- Name: asistencia asistencia_curso_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.asistencia
+    ADD CONSTRAINT asistencia_curso_id_fkey FOREIGN KEY (curso_id) REFERENCES public.curso(id);
+
+
+--
+-- TOC entry 5130 (class 2606 OID 18461)
+-- Name: asistencia asistencia_estudiante_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.asistencia
+    ADD CONSTRAINT asistencia_estudiante_id_fkey FOREIGN KEY (estudiante_id) REFERENCES public.estudiante(id);
+
+
+--
+-- TOC entry 5131 (class 2606 OID 18466)
+-- Name: asistencia asistencia_registrada_por_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.asistencia
+    ADD CONSTRAINT asistencia_registrada_por_id_fkey FOREIGN KEY (registrada_por_id) REFERENCES public.usuario(id);
+
+
+--
+-- TOC entry 5132 (class 2606 OID 18471)
+-- Name: carrera carrera_institucion_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.carrera
+    ADD CONSTRAINT carrera_institucion_id_fkey FOREIGN KEY (institucion_id) REFERENCES public.institucion(id);
+
+
+--
+-- TOC entry 5133 (class 2606 OID 18476)
+-- Name: charla charla_foro_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.charla
+    ADD CONSTRAINT charla_foro_id_fkey FOREIGN KEY (foro_id) REFERENCES public.foro(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 5134 (class 2606 OID 18481)
+-- Name: charla charla_materia_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.charla
+    ADD CONSTRAINT charla_materia_id_fkey FOREIGN KEY (materia_id) REFERENCES public.materia(id) ON DELETE SET NULL;
+
+
+--
+-- TOC entry 5135 (class 2606 OID 18486)
+-- Name: chat chat_curso_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.chat
+    ADD CONSTRAINT chat_curso_id_fkey FOREIGN KEY (curso_id) REFERENCES public.curso(id);
+
+
+--
+-- TOC entry 5189 (class 2606 OID 18771)
+-- Name: chatbot_conversacion chatbot_conversacion_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.chatbot_conversacion
+    ADD CONSTRAINT chatbot_conversacion_usuario_id_fkey FOREIGN KEY (usuario_id) REFERENCES public.usuario(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 5190 (class 2606 OID 18791)
+-- Name: chatbot_mensaje chatbot_mensaje_conversacion_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.chatbot_mensaje
+    ADD CONSTRAINT chatbot_mensaje_conversacion_id_fkey FOREIGN KEY (conversacion_id) REFERENCES public.chatbot_conversacion(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 5136 (class 2606 OID 18491)
+-- Name: consulta_chatbot consulta_chatbot_consultante_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.consulta_chatbot
+    ADD CONSTRAINT consulta_chatbot_consultante_id_fkey FOREIGN KEY (consultante_id) REFERENCES public.usuario(id);
+
+
+--
+-- TOC entry 5137 (class 2606 OID 18496)
+-- Name: consulta_chatbot consulta_chatbot_derivada_a_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.consulta_chatbot
+    ADD CONSTRAINT consulta_chatbot_derivada_a_id_fkey FOREIGN KEY (derivada_a_id) REFERENCES public.usuario(id);
+
+
+--
+-- TOC entry 5138 (class 2606 OID 18501)
+-- Name: correlatividad correlatividad_materia_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.correlatividad
+    ADD CONSTRAINT correlatividad_materia_id_fkey FOREIGN KEY (materia_id) REFERENCES public.materia(id);
+
+
+--
+-- TOC entry 5139 (class 2606 OID 18506)
+-- Name: correlatividad correlatividad_materia_requerida_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.correlatividad
+    ADD CONSTRAINT correlatividad_materia_requerida_id_fkey FOREIGN KEY (materia_requerida_id) REFERENCES public.materia(id);
+
+
+--
+-- TOC entry 5140 (class 2606 OID 18511)
+-- Name: curso curso_materia_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.curso
+    ADD CONSTRAINT curso_materia_id_fkey FOREIGN KEY (materia_id) REFERENCES public.materia(id);
+
+
+--
+-- TOC entry 5141 (class 2606 OID 18516)
+-- Name: director director_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.director
+    ADD CONSTRAINT director_id_fkey FOREIGN KEY (id) REFERENCES public.usuario(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 5143 (class 2606 OID 18521)
+-- Name: docente_curso docente_curso_curso_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.docente_curso
+    ADD CONSTRAINT docente_curso_curso_id_fkey FOREIGN KEY (curso_id) REFERENCES public.curso(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 5144 (class 2606 OID 18526)
+-- Name: docente_curso docente_curso_docente_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.docente_curso
+    ADD CONSTRAINT docente_curso_docente_id_fkey FOREIGN KEY (docente_id) REFERENCES public.docente(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 5142 (class 2606 OID 18531)
+-- Name: docente docente_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.docente
+    ADD CONSTRAINT docente_id_fkey FOREIGN KEY (id) REFERENCES public.usuario(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 5145 (class 2606 OID 18536)
+-- Name: docente_mesa_examen docente_mesa_examen_docente_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.docente_mesa_examen
+    ADD CONSTRAINT docente_mesa_examen_docente_id_fkey FOREIGN KEY (docente_id) REFERENCES public.docente(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 5146 (class 2606 OID 18541)
+-- Name: docente_mesa_examen docente_mesa_examen_mesa_examen_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.docente_mesa_examen
+    ADD CONSTRAINT docente_mesa_examen_mesa_examen_id_fkey FOREIGN KEY (mesa_examen_id) REFERENCES public.mesa_examen(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 5147 (class 2606 OID 18546)
+-- Name: documento documento_legajo_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.documento
+    ADD CONSTRAINT documento_legajo_id_fkey FOREIGN KEY (legajo_id) REFERENCES public.legajo(id);
+
+
+--
+-- TOC entry 5148 (class 2606 OID 18551)
+-- Name: documento documento_licencia_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.documento
+    ADD CONSTRAINT documento_licencia_id_fkey FOREIGN KEY (licencia_id) REFERENCES public.licencia(id);
+
+
+--
+-- TOC entry 5149 (class 2606 OID 18556)
+-- Name: documento documento_revisado_por_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.documento
+    ADD CONSTRAINT documento_revisado_por_id_fkey FOREIGN KEY (revisado_por_id) REFERENCES public.preceptor(id);
+
+
+--
+-- TOC entry 5150 (class 2606 OID 18561)
+-- Name: documento documento_subido_por_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.documento
+    ADD CONSTRAINT documento_subido_por_id_fkey FOREIGN KEY (subido_por_id) REFERENCES public.usuario(id);
+
+
+--
+-- TOC entry 5151 (class 2606 OID 18566)
+-- Name: estudiante estudiante_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.estudiante
+    ADD CONSTRAINT estudiante_id_fkey FOREIGN KEY (id) REFERENCES public.usuario(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 5152 (class 2606 OID 18571)
+-- Name: evento evento_institucion_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.evento
+    ADD CONSTRAINT evento_institucion_id_fkey FOREIGN KEY (institucion_id) REFERENCES public.institucion(id);
+
+
+--
+-- TOC entry 5153 (class 2606 OID 18576)
+-- Name: firma_acta firma_acta_acta_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.firma_acta
+    ADD CONSTRAINT firma_acta_acta_id_fkey FOREIGN KEY (acta_id) REFERENCES public.acta(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 5154 (class 2606 OID 18581)
+-- Name: firma_acta firma_acta_firmante_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.firma_acta
+    ADD CONSTRAINT firma_acta_firmante_id_fkey FOREIGN KEY (firmante_id) REFERENCES public.usuario(id);
+
+
+--
+-- TOC entry 5155 (class 2606 OID 18586)
+-- Name: foro foro_carrera_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.foro
+    ADD CONSTRAINT foro_carrera_id_fkey FOREIGN KEY (carrera_id) REFERENCES public.carrera(id);
+
+
+--
+-- TOC entry 5156 (class 2606 OID 18591)
+-- Name: foro foro_institucion_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.foro
+    ADD CONSTRAINT foro_institucion_id_fkey FOREIGN KEY (institucion_id) REFERENCES public.institucion(id);
+
+
+--
+-- TOC entry 5157 (class 2606 OID 18596)
+-- Name: foro foro_materia_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.foro
+    ADD CONSTRAINT foro_materia_id_fkey FOREIGN KEY (materia_id) REFERENCES public.materia(id);
+
+
+--
+-- TOC entry 5158 (class 2606 OID 18601)
+-- Name: inscripcion_curso inscripcion_curso_curso_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inscripcion_curso
+    ADD CONSTRAINT inscripcion_curso_curso_id_fkey FOREIGN KEY (curso_id) REFERENCES public.curso(id);
+
+
+--
+-- TOC entry 5159 (class 2606 OID 18606)
+-- Name: inscripcion_curso inscripcion_curso_estudiante_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inscripcion_curso
+    ADD CONSTRAINT inscripcion_curso_estudiante_id_fkey FOREIGN KEY (estudiante_id) REFERENCES public.estudiante(id);
+
+
+--
+-- TOC entry 5160 (class 2606 OID 18611)
+-- Name: inscripcion_evento inscripcion_evento_estudiante_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inscripcion_evento
+    ADD CONSTRAINT inscripcion_evento_estudiante_id_fkey FOREIGN KEY (estudiante_id) REFERENCES public.estudiante(id);
+
+
+--
+-- TOC entry 5161 (class 2606 OID 18616)
+-- Name: inscripcion_evento inscripcion_evento_evento_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inscripcion_evento
+    ADD CONSTRAINT inscripcion_evento_evento_id_fkey FOREIGN KEY (evento_id) REFERENCES public.evento(id);
+
+
+--
+-- TOC entry 5162 (class 2606 OID 18621)
+-- Name: inscripcion_mesa inscripcion_mesa_estudiante_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inscripcion_mesa
+    ADD CONSTRAINT inscripcion_mesa_estudiante_id_fkey FOREIGN KEY (estudiante_id) REFERENCES public.estudiante(id);
+
+
+--
+-- TOC entry 5163 (class 2606 OID 18626)
+-- Name: inscripcion_mesa inscripcion_mesa_mesa_examen_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inscripcion_mesa
+    ADD CONSTRAINT inscripcion_mesa_mesa_examen_id_fkey FOREIGN KEY (mesa_examen_id) REFERENCES public.mesa_examen(id);
+
+
+--
+-- TOC entry 5164 (class 2606 OID 18631)
+-- Name: lectura_mensaje lectura_mensaje_mensaje_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.lectura_mensaje
+    ADD CONSTRAINT lectura_mensaje_mensaje_id_fkey FOREIGN KEY (mensaje_id) REFERENCES public.mensaje(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 5165 (class 2606 OID 18636)
+-- Name: lectura_mensaje lectura_mensaje_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.lectura_mensaje
+    ADD CONSTRAINT lectura_mensaje_usuario_id_fkey FOREIGN KEY (usuario_id) REFERENCES public.usuario(id);
+
+
+--
+-- TOC entry 5166 (class 2606 OID 18641)
+-- Name: legajo legajo_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.legajo
+    ADD CONSTRAINT legajo_usuario_id_fkey FOREIGN KEY (usuario_id) REFERENCES public.usuario(id);
+
+
+--
+-- TOC entry 5167 (class 2606 OID 18646)
+-- Name: licencia licencia_aprobada_por_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.licencia
+    ADD CONSTRAINT licencia_aprobada_por_id_fkey FOREIGN KEY (aprobada_por_id) REFERENCES public.secretario(id);
+
+
+--
+-- TOC entry 5168 (class 2606 OID 18651)
+-- Name: licencia licencia_solicitante_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.licencia
+    ADD CONSTRAINT licencia_solicitante_id_fkey FOREIGN KEY (solicitante_id) REFERENCES public.usuario(id);
+
+
+--
+-- TOC entry 5169 (class 2606 OID 18656)
+-- Name: materia materia_carrera_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.materia
+    ADD CONSTRAINT materia_carrera_id_fkey FOREIGN KEY (carrera_id) REFERENCES public.carrera(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 5170 (class 2606 OID 18661)
+-- Name: mensaje mensaje_autor_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.mensaje
+    ADD CONSTRAINT mensaje_autor_id_fkey FOREIGN KEY (autor_id) REFERENCES public.usuario(id);
+
+
+--
+-- TOC entry 5171 (class 2606 OID 18666)
+-- Name: mensaje mensaje_chat_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.mensaje
+    ADD CONSTRAINT mensaje_chat_id_fkey FOREIGN KEY (chat_id) REFERENCES public.chat(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 5172 (class 2606 OID 18671)
+-- Name: mesa_examen mesa_examen_materia_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.mesa_examen
+    ADD CONSTRAINT mesa_examen_materia_id_fkey FOREIGN KEY (materia_id) REFERENCES public.materia(id);
+
+
+--
+-- TOC entry 5173 (class 2606 OID 18676)
+-- Name: nota nota_inscripcion_curso_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.nota
+    ADD CONSTRAINT nota_inscripcion_curso_id_fkey FOREIGN KEY (inscripcion_curso_id) REFERENCES public.inscripcion_curso(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 5174 (class 2606 OID 18681)
+-- Name: notificacion notificacion_destinatario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.notificacion
+    ADD CONSTRAINT notificacion_destinatario_id_fkey FOREIGN KEY (destinatario_id) REFERENCES public.usuario(id);
+
+
+--
+-- TOC entry 5175 (class 2606 OID 18686)
+-- Name: notificacion notificacion_emisor_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.notificacion
+    ADD CONSTRAINT notificacion_emisor_id_fkey FOREIGN KEY (emisor_id) REFERENCES public.usuario(id);
+
+
+--
+-- TOC entry 5176 (class 2606 OID 18691)
+-- Name: participante_chat participante_chat_chat_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.participante_chat
+    ADD CONSTRAINT participante_chat_chat_id_fkey FOREIGN KEY (chat_id) REFERENCES public.chat(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 5177 (class 2606 OID 18696)
+-- Name: participante_chat participante_chat_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.participante_chat
+    ADD CONSTRAINT participante_chat_usuario_id_fkey FOREIGN KEY (usuario_id) REFERENCES public.usuario(id);
+
+
+--
+-- TOC entry 5178 (class 2606 OID 18701)
+-- Name: preceptor preceptor_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.preceptor
+    ADD CONSTRAINT preceptor_id_fkey FOREIGN KEY (id) REFERENCES public.usuario(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 5179 (class 2606 OID 18706)
+-- Name: preinscripcion preinscripcion_carrera_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.preinscripcion
+    ADD CONSTRAINT preinscripcion_carrera_id_fkey FOREIGN KEY (carrera_id) REFERENCES public.carrera(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 5180 (class 2606 OID 18711)
+-- Name: preinscripcion preinscripcion_gestionada_por_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.preinscripcion
+    ADD CONSTRAINT preinscripcion_gestionada_por_id_fkey FOREIGN KEY (gestionada_por_id) REFERENCES public.preceptor(id);
+
+
+--
+-- TOC entry 5181 (class 2606 OID 18716)
+-- Name: preinscripcion preinscripcion_institucion_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.preinscripcion
+    ADD CONSTRAINT preinscripcion_institucion_id_fkey FOREIGN KEY (institucion_id) REFERENCES public.institucion(id);
+
+
+--
+-- TOC entry 5182 (class 2606 OID 18721)
+-- Name: publicacion publicacion_autor_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.publicacion
+    ADD CONSTRAINT publicacion_autor_id_fkey FOREIGN KEY (autor_id) REFERENCES public.usuario(id);
+
+
+--
+-- TOC entry 5183 (class 2606 OID 18726)
+-- Name: publicacion publicacion_charla_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.publicacion
+    ADD CONSTRAINT publicacion_charla_id_fkey FOREIGN KEY (charla_id) REFERENCES public.charla(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 5184 (class 2606 OID 18731)
+-- Name: respuesta respuesta_autor_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.respuesta
+    ADD CONSTRAINT respuesta_autor_id_fkey FOREIGN KEY (autor_id) REFERENCES public.usuario(id);
+
+
+--
+-- TOC entry 5185 (class 2606 OID 18736)
+-- Name: respuesta respuesta_publicacion_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.respuesta
+    ADD CONSTRAINT respuesta_publicacion_id_fkey FOREIGN KEY (publicacion_id) REFERENCES public.publicacion(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 5186 (class 2606 OID 18741)
+-- Name: secretario secretario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.secretario
+    ADD CONSTRAINT secretario_id_fkey FOREIGN KEY (id) REFERENCES public.usuario(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 5187 (class 2606 OID 18746)
+-- Name: usuario_institucion usuario_institucion_institucion_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.usuario_institucion
+    ADD CONSTRAINT usuario_institucion_institucion_id_fkey FOREIGN KEY (institucion_id) REFERENCES public.institucion(id);
+
+
+--
+-- TOC entry 5188 (class 2606 OID 18751)
+-- Name: usuario_institucion usuario_institucion_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.usuario_institucion
+    ADD CONSTRAINT usuario_institucion_usuario_id_fkey FOREIGN KEY (usuario_id) REFERENCES public.usuario(id);
+
+
+-- Completed on 2026-10-30 12:06:31
+
+--
+-- PostgreSQL database dump complete
+--
+
+\unrestrict Kow8snIT8cHZuETKEoENUa8YIhlvfVkseM7mcRFZcApnjU0xogsFsRfcGn7GNmR
+
