@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { API_URL } from "./configuracion";
+import { API_URL } from "./Configuracion";
 
 interface login{
     mensaje: string,

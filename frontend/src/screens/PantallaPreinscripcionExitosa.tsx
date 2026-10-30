@@ -36,7 +36,7 @@ return (
 
                 <Boton
                     label = "Inicio"
-                    onPress ={() => router.push("/")}
+                    onPress ={() => router.push("/errorSistema")}
                     style = {styles.botonMargin}
                 />
                 
@@ -60,14 +60,13 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
     image: {
-        width: "100%",
+        width: "30%",
         height: 170,
     },
     formContainer: {
-        width: "30%",
+        width: "90%",
         alignItems: "center",
         justifyContent: "center",
-        marginTop: 0,
     },
      textoTitulo: {
         fontSize: 30,

@@ -3,7 +3,7 @@ import axios from "axios";
 import { obtenerToken } from "./ServicioToken";
 import { borrarToken } from "./ServicioToken";
 
-import { API_URL } from "./configuracion";
+import { API_URL } from "./Configuracion";
 
 export interface Institucion {
     institucion_id: number;

@@ -5,7 +5,6 @@ import { useRouter } from "expo-router";
 import {  } from "expo-router/build/react-navigation";
 import { useState } from "react";
 import { Image, Platform, StyleSheet, TouchableOpacity, View, Text, ScrollView } from "react-native";
-
 import TextBox from "../components/Textbox";
 
 export default function PantallaPreinscripcion2() {

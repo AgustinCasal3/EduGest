@@ -1,6 +1,6 @@
 // frontend/src/app/institucion/[id].tsx
-import PantallaInstitucion from "@/screens/PantallaInstitucion";
+import PantallaForo from "@/screens/PantallaForo";
 
 export default function RutaInstitucion() {
-  return <PantallaInstitucion />;
+  return <PantallaForo />;
 }

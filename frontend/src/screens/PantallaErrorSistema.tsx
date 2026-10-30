@@ -47,9 +47,9 @@ const styles = StyleSheet.create({
         marginTop: 60,
     },
     textContainer: {
-        width: 220,
+        width: "90%",
         // gap: 16,
-        alignItems: "flex-start",
+        alignItems: "center",
         justifyContent: "center",
         // marginBottom: 80,
     },

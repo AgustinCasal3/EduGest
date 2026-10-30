@@ -12,7 +12,7 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import BotonAtras from "@/components/BotonAtras";
 import { obtenerToken } from "@/services/ServicioToken";
 
-//import { API_URL } from "./configuracion";
+import { API_URL } from "./configuracion";
 
 interface Charla {
   id: number;
@@ -32,7 +32,7 @@ interface DatosForo {
 }
 
 // IP asignada a tu backend local
-const API_URL = "http://10.0.50.15:3000/api";
+//const API_URL = "http://10.0.50.15:3000/api";
 
 export default function PantallaInstitucion() {
   const { id } = useLocalSearchParams<{ id: string }>();

@@ -1,45 +1,56 @@
-import {View, Text, StyleSheet, TouchableOpacity,TextInput, Image, ScrollView, Pressable} from "react-native";
+import {View, Text, StyleSheet, TouchableOpacity,TextInput, Image, ScrollView, Pressable, Platform, useWindowDimensions, KeyboardAvoidingView} from "react-native";
 import { useRouter } from "expo-router";
 import { useState } from "react"
 import BotonAtras from "@/components/BotonAtras";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function ChatBot() {
     const router = useRouter();
-    const [menuAbierto, setMenuAbierto] = useState(true);
+    const [menuAbierto, setMenuAbierto] = useState(false);
+    const { width } = useWindowDimensions();
+    const insets = useSafeAreaInsets();
+    const esMovil = width < 768;
   
 
   return(
     <View style={styles.container}>
 
       {menuAbierto && (
-        <View style={styles.contenedorIzquierda}>
-          <View style={styles.botonesMenu}>
-            <BotonAtras onPress={() => router.back()} style={styles.botonAtras}/>
-            <Text>Nombre del chat</Text>
+        <>
+          {esMovil && (
+            <Pressable style={styles.fondoOscuro} onPress={() => setMenuAbierto(false)}/>
+          )}
+          <View style={[styles.contenedorIzquierda, esMovil && styles.contenedorIzquierdaMovil, { paddingTop: insets.top },]}>
+              <View style={styles.botonesMenu}>
+                <BotonAtras onPress={() => router.back()} style={styles.botonAtras}/>
+                <Text>Nombre del chat</Text>
+              </View>
+              <Pressable style={({hovered}: any) => [styles.botonNuevoChat, hovered && styles.botonHover]}><Image style={styles.imagenMas} source={require("../../assets/images/simboloMas.png")}/><Text style={styles.textoNuevoChat}>Nuevo chat</Text></Pressable>
+              <Text style={styles.textoChat}>Chats</Text>
+              <ScrollView>
+                <Pressable style={({hovered}: any) => [styles.botonChats, hovered && styles.botonHover]}><Text style={styles.textoBotonChat}>Hola lorem</Text></Pressable>
+                <Pressable style={({hovered}: any) => [styles.botonChats, hovered && styles.botonHover]}><Text style={styles.textoBotonChat}>Hola lorem</Text></Pressable>
+                <Pressable style={({hovered}: any) => [styles.botonChats, hovered && styles.botonHover]}><Text style={styles.textoBotonChat}>Hola lorem</Text></Pressable>
+                <Pressable style={({hovered}: any) => [styles.botonChats, hovered && styles.botonHover]}><Text style={styles.textoBotonChat}>Hola lorem</Text></Pressable>
+                <Pressable style={({hovered}: any) => [styles.botonChats, hovered && styles.botonHover]}><Text style={styles.textoBotonChat}>Hola lorem</Text></Pressable>
+                <Pressable style={({hovered}: any) => [styles.botonChats, hovered && styles.botonHover]}><Text style={styles.textoBotonChat}>Hola lorem</Text></Pressable>
+                <Pressable style={({hovered}: any) => [styles.botonChats, hovered && styles.botonHover]}><Text style={styles.textoBotonChat}>Hola lorem</Text></Pressable>
+                <Pressable style={({hovered}: any) => [styles.botonChats, hovered && styles.botonHover]}><Text style={styles.textoBotonChat}>Hola lorem</Text></Pressable>
+                <Pressable style={({hovered}: any) => [styles.botonChats, hovered && styles.botonHover]}><Text style={styles.textoBotonChat}>Hola lorem</Text></Pressable>
+                <Pressable style={({hovered}: any) => [styles.botonChats, hovered && styles.botonHover]}><Text style={styles.textoBotonChat}>Hola lorem</Text></Pressable>
+              </ScrollView>
+              <View style={styles.contenedorCuenta}>
+                <Image source={require("../../assets/images/iconoCuenta.png")}/>
+                <Text> Nombre del usuario</Text>
+              </View>
           </View>
-          <Pressable style={({hovered}: any) => [styles.botonNuevoChat, hovered && styles.botonHover]}><Image style={styles.imagenMas} source={require("../../assets/images/simboloMas.png")}/><Text style={styles.textoNuevoChat}>Nuevo chat</Text></Pressable>
-          <Text style={styles.textoChat}>Chats</Text>
-          <ScrollView>
-            <Pressable style={({hovered}: any) => [styles.botonChats, hovered && styles.botonHover]}><Text style={styles.textoBotonChat}>Hola lorem</Text></Pressable>
-            <Pressable style={({hovered}: any) => [styles.botonChats, hovered && styles.botonHover]}><Text style={styles.textoBotonChat}>Hola lorem</Text></Pressable>
-            <Pressable style={({hovered}: any) => [styles.botonChats, hovered && styles.botonHover]}><Text style={styles.textoBotonChat}>Hola lorem</Text></Pressable>
-            <Pressable style={({hovered}: any) => [styles.botonChats, hovered && styles.botonHover]}><Text style={styles.textoBotonChat}>Hola lorem</Text></Pressable>
-            <Pressable style={({hovered}: any) => [styles.botonChats, hovered && styles.botonHover]}><Text style={styles.textoBotonChat}>Hola lorem</Text></Pressable>
-            <Pressable style={({hovered}: any) => [styles.botonChats, hovered && styles.botonHover]}><Text style={styles.textoBotonChat}>Hola lorem</Text></Pressable>
-            <Pressable style={({hovered}: any) => [styles.botonChats, hovered && styles.botonHover]}><Text style={styles.textoBotonChat}>Hola lorem</Text></Pressable>
-            <Pressable style={({hovered}: any) => [styles.botonChats, hovered && styles.botonHover]}><Text style={styles.textoBotonChat}>Hola lorem</Text></Pressable>
-            <Pressable style={({hovered}: any) => [styles.botonChats, hovered && styles.botonHover]}><Text style={styles.textoBotonChat}>Hola lorem</Text></Pressable>
-            <Pressable style={({hovered}: any) => [styles.botonChats, hovered && styles.botonHover]}><Text style={styles.textoBotonChat}>Hola lorem</Text></Pressable>
-          </ScrollView>
-          <View style={styles.contenedorCuenta}>
-            <Image source={require("../../assets/images/iconoCuenta.png")}/>
-            <Text> Nombre del usuario</Text>
-          </View>
-        </View>
+        </>
+
+
       )}
 
-      <View style={styles.contenedorDerecha}>
-        <TouchableOpacity style={styles.botonMenu} onPress={() => setMenuAbierto(!menuAbierto)}><Image source={require("../../assets/images/menu.png")}/></TouchableOpacity>
+      <KeyboardAvoidingView style={styles.contenedorDerecha} behavior={Platform.OS === "ios" ? "padding" : undefined}>
+        <TouchableOpacity style={[styles.botonMenu, {marginTop: insets.top + 10, marginLeft: 10}]} onPress={() => setMenuAbierto(!menuAbierto)}><Image source={require("../../assets/images/menu.png")}/></TouchableOpacity>
         <ScrollView style={styles.scrollChat} contentContainerStyle={styles.scrollChatContenido}>
           <View style={styles.contenedorChat}>
             <Text style={styles.textPregunta}>hola Lorem Lorem Lorem hola Lorem Lorem Lorem hola Lorem Lorem Lorem hola Lorem Lorem Lorem</Text>
@@ -51,13 +62,13 @@ export default function ChatBot() {
           </View>
         </ScrollView>
 
-        <View style={styles.zonaMensaje}>
+        <View style={[styles.zonaMensaje, {paddingBottom: Math.max(insets.bottom, 15)}]}>
           <View style={styles.contenedorMensaje}>
             <TextInput placeholder="Escriba un mensaje..." multiline maxLength={500 } style={styles.textboxMensaje}></TextInput>
             <TouchableOpacity style={styles.botonEnviar}><Image source={require("../../assets/images/fechaArriba.png")}/></TouchableOpacity> 
           </View>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </View>
   );
 }
@@ -92,8 +103,24 @@ const styles = StyleSheet.create({
   },
   contenedorIzquierda: {
     width: "20%",
+    minWidth: 220,
     backgroundColor: "#e7edec",
   },
+  contenedorIzquierdaMovil: {
+    position: "absolute",
+    top: 0, bottom: 0, left: 0, right: 0,
+    backgroundColor: "#e7edec",
+    zIndex: 10,
+    elevation: 10,
+  },
+  fondoOscuro: {
+    position: "absolute",
+    top: 0, bottom: 0, left: 0, right: 0,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    zIndex: 10,
+    elevation: 10,
+  },
+
   contenedorDerecha: {
     flex: 1,
     flexDirection: "column",
@@ -103,7 +130,7 @@ const styles = StyleSheet.create({
   },
   scrollChatContenido: {
     alignItems: "center",
-    paddingTop: 60,
+    paddingTop: 10,
     paddingBottom: 20,
   },
   contenedorChat: {
@@ -112,15 +139,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   zonaMensaje: {
-    position: "absolute",
-    bottom: 0,
-    left: 15,
-    right: 15,
+    // position: "absolute",
+    // bottom: 0,
+    // left: 15,
+    // right: 15,
     alignItems: "center",
-    paddingHorizontal: 20,
-    paddingBottom: 30,
-    pointerEvents: "box-none",
-    zIndex: 1,
+    paddingHorizontal: 15,
+    paddingTop: 10,
+    // paddingBottom: 30,
+    // pointerEvents: "box-none",
+    // zIndex: 1,
     backgroundColor: "#232827",
   },
   contenedorMensaje: {
@@ -256,7 +284,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     color:"#f5f5f5",
-    backgroundColor: "#1e1f1f",
+    backgroundColor: "#fdfdfd",
     fontWeight: "bold",
     fontSize: 19,
     height: 40,
@@ -281,7 +309,7 @@ const styles = StyleSheet.create({
     marginTop: 1.5,
   },
   botonChats: {
-    width: "100%",
+    flex: 1,
     height: 30,
     marginBottom: 0.4,
     alignItems: "center",
